@@ -1,20 +1,22 @@
-import express from 'express';
-import http from 'http';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
-import cors from 'cors';
+import Fastify from 'fastify';
+import cors from '@fastify/cors';
+import router from './router';
 
-const app = express();
-app.use(cors({
-    credentials: true
-}))
-app.use(compression());
-app.use(cookieParser());
-app.use(bodyParser.json());
+const app = Fastify({ 
+    logger: true 
+});
 
-const server = http.createServer(app);
+const start = async () => {
 
-server.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
-})
+    await app.register(router);
+    await app.register(cors);
+
+    try {
+        await app.listen({port: 8080})
+    }
+    catch (err) {
+        process.exit(1)
+    }   
+}
+
+start();
