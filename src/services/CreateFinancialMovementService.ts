@@ -1,28 +1,18 @@
-//id        String   @id @default(auto()) @map("_id") @db.ObjectId
-        // authorId  String @db.ObjectId
-        // author    User     @relation(fields: [authorId], references: [id])
-        // value     Float
-        // categories String[]
-        // notes     String?
-        // date      DateTime @default(now())
-
 import prismaClient from "../prisma";
-
-type FinancialMovementType = 'INCOME' | 'EXPENSE';
+import { FinancialMovementType, FinancialMovement } from "@prisma/client"
 
 type CreateFinancialMovementServiceProps = {
-    authorId: string;
+    authorId: FinancialMovement["authorId"];
     type: FinancialMovementType
     value: number;
     categories: string[];
     notes?: string;
-    date: string;
 }
 
 export class CreateFinancialMovementService {
-    async handle({authorId, type, value, categories, notes, date}: CreateFinancialMovementServiceProps) {
+    async handle({authorId, type, value, categories, notes}: CreateFinancialMovementServiceProps) {
         
-        if ( !authorId || !value || !categories || !date ) {
+        if ( !authorId || !value || !categories || !type ) {
             throw new Error('Missing request data.')
         }
 
@@ -32,8 +22,7 @@ export class CreateFinancialMovementService {
                 type,
                 value,
                 categories,
-                notes,
-                date
+                notes
             }
         });
 
