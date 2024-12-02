@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CreateUserService } from '../services/createUserService';
+import { CreateUserService } from '../services/CreateUserService';
 
 export class CreateUserController {
     async handle(request: FastifyRequest, reply: FastifyReply) {

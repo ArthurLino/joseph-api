@@ -19,6 +19,23 @@ model User {
   email     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  FinancialMovements FinancialMovement[]
   @@map("users")
+}
+
+model FinancialMovement {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  authorId  String @db.ObjectId
+  author    User     @relation(fields: [authorId], references: [id])
+  value     Float
+  type      FinancialMovementType
+  categories String[]
+  notes     String?
+  date      DateTime @default(now())
+  @@map("financial_movements")
+}
+
+enum FinancialMovementType {
+    INCOME
+    EXPENSE
 }
