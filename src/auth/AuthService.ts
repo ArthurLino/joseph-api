@@ -42,9 +42,9 @@ export class AuthService {
     }
 
     verifyToken(token: string) {
-        if (!process.env.JWT_SECRET) throw new Error('Something went wrong. Try again later.')
-        const {id, email} = jwt.verify(token, process.env.JWT_SECRET) as {id: string, email: string};
-        console.log(id, email)
-        return {id, email}
+        const secret = process.env.JWT_SECRET
+        if (!secret) throw new Error('Something went wrong. Try again later.')
+        const user = jwt.verify(token, secret) as {id: string, email: string};
+        return user
     }
 }

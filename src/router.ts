@@ -17,7 +17,10 @@ export async function router(fastify: FastifyInstance, options: FastifyPluginOpt
         return new AuthController().handleLogin(request, reply);
     });
 
-    fastify.get('/user', { preHandler: (request: FastifyRequest, reply: FastifyReply) => AuthMiddleware(request, reply) }, async (request: FastifyRequest, reply: FastifyReply) => {
+    fastify.get('/user', { preHandler: (request: FastifyRequest, reply: FastifyReply, done) => {
+        AuthMiddleware(request, reply)
+        done()
+    }}, async (request: FastifyRequest, reply: FastifyReply) => {
     return { message: 'hello world! logged' };
     });
 
