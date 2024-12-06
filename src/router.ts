@@ -2,6 +2,7 @@ import { FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } f
 import { AuthController } from "./auth/AuthController";
 import { AuthenticatedUserRequest, AuthMiddleware } from "./auth/middleware/AuthMiddleware";
 import { CreateFinancialMovementController } from "./controllers/CreateFinancialMovementController";
+import { ListFinancialMovementsController } from "./controllers/ListFinancialMovementsController";
 
 export async function router(fastify: FastifyInstance, options: FastifyPluginOptions) {
     fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -16,11 +17,16 @@ export async function router(fastify: FastifyInstance, options: FastifyPluginOpt
         return new AuthController().handleLogin(request, reply);
     });
 
-    fastify.post('/finances', { preHandler: (request: FastifyRequest, reply: FastifyReply, done) => {
-        AuthMiddleware(request, reply)
-        done()
-    }}, async (request: AuthenticatedUserRequest, reply: FastifyReply) => {
+    fastify.post('/finances', { preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+        await AuthMiddleware(request, reply)
+    }}, async (request: AuthenticatedUserRequest, reply) => {
         return new CreateFinancialMovementController().handle(request, reply);
+    });
+
+    fastify.get('/finances', {preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+        await AuthMiddleware(request, reply)
+    }}, async (request: AuthenticatedUserRequest, reply) => {
+        return new ListFinancialMovementsController().handle(request, reply)
     });
 }
 

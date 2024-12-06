@@ -1,4 +1,4 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import { FastifyReply } from "fastify";
 import { CreateFinancialMovementService } from "../services/CreateFinancialMovementService";
 import { FinancialMovementType, FinancialMovement } from "@prisma/client"
 import { AuthenticatedUserRequest } from "../auth/middleware/AuthMiddleware";
