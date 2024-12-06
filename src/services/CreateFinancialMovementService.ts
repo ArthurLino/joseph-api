@@ -7,27 +7,25 @@ type CreateFinancialMovementServiceProps = {
     value: number;
     categories: string[];
     notes?: string;
+    date?: Date;
 }
 
 export class CreateFinancialMovementService {
-    async handle({authorId, type, value, categories, notes}: CreateFinancialMovementServiceProps) {
-        
-        // if ( !authorId || !value || !categories || !type ) {
-        //     throw new Error('Missing request data.')
-        // }
+    async handle({authorId, type, value, categories, notes, date}: CreateFinancialMovementServiceProps) {
 
-        // const financialMovement = prismaClient.financialMovement.create({
-        //     data: {
-        //         authorId,
-        //         type,
-        //         value,
-        //         categories,
-        //         notes
-        //     }
-        // });
+        if ( !authorId || !value || !type || !categories ) throw new Error('Missing request data.')
 
-        // return financialMovement
+        const financialMovement = await prismaClient.financialMovement.create({
+            data: {
+                authorId,
+                type,
+                value,
+                notes,
+                date,
+                // categories
+            }
+        });
 
-        return { message: 'hello world!' };
+        return financialMovement
     }
 }

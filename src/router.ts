@@ -1,8 +1,7 @@
 import { FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } from "fastify";
-import { CreateUserController } from "./controllers/CreateUserController";
-import { CreateFinancialMovementController } from "./controllers/CreateFinancialMovementController";
 import { AuthController } from "./auth/AuthController";
-import { AuthMiddleware } from "./auth/middleware/AuthMiddleware";
+import { AuthenticatedUserRequest, AuthMiddleware } from "./auth/middleware/AuthMiddleware";
+import { CreateFinancialMovementController } from "./controllers/CreateFinancialMovementController";
 
 export async function router(fastify: FastifyInstance, options: FastifyPluginOptions) {
     fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -17,16 +16,12 @@ export async function router(fastify: FastifyInstance, options: FastifyPluginOpt
         return new AuthController().handleLogin(request, reply);
     });
 
-    fastify.get('/user', { preHandler: (request: FastifyRequest, reply: FastifyReply, done) => {
+    fastify.post('/finances', { preHandler: (request: FastifyRequest, reply: FastifyReply, done) => {
         AuthMiddleware(request, reply)
         done()
-    }}, async (request: FastifyRequest, reply: FastifyReply) => {
-    return { message: 'hello world! logged' };
+    }}, async (request: AuthenticatedUserRequest, reply: FastifyReply) => {
+        return new CreateFinancialMovementController().handle(request, reply);
     });
-
-    // fastify.post('/user/:authorId/finances/create', async (request: FastifyRequest, reply: FastifyReply) => {
-    //     return new CreateFinancialMovementController().handle(request, reply);
-    // });
 }
 
 export default router;
