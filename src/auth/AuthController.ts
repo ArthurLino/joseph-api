@@ -14,7 +14,7 @@ export class AuthController {
         const user = await authService.signUp({name, email, password} as {name: string, email: string, password: string});
 
         console.log('Signing up...')
-        reply.send({"message": "User created successfully.", user}).code(201);
+        reply.send({"message": "User created successfully.", user: {id: user.id, name: user.name, email: user.email}}).code(201);
 
     }
 
@@ -30,6 +30,6 @@ export class AuthController {
         const { token, user } = await authService.login({email, password} as {email: string, password: string});
 
         console.log('Logging in...')
-        reply.send({"message": "User logged in successfully.", user, token}).code(200);
+        reply.send({"message": "User logged in successfully.", user: {id: user.id, name: user.name, email: user.email}, token}).code(200);
     }
 }

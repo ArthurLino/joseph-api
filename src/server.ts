@@ -8,7 +8,7 @@ const app = Fastify({
 
 const start = async () => {
 
-    await app.register(router);
+    await app.register(router, { prefix: '/api' });
     await app.register(cors);
 
     try {

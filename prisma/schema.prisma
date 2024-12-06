@@ -16,10 +16,12 @@ datasource db {
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  email     String
+  email     String  @unique
+  password  String @map("password")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  FinancialMovements FinancialMovement[]
+  cashFlow FinancialMovement[]
+  userFinancialCategories FinancialCategory[]
   @@map("users")
 }
 
@@ -29,10 +31,20 @@ model FinancialMovement {
   author    User     @relation(fields: [authorId], references: [id])
   value     Float
   type      FinancialMovementType
-  categories String[]
+  categories FinancialCategory[]
   notes     String?
   date      DateTime @default(now())
   @@map("financial_movements")
+}
+
+model FinancialCategory {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  authorId  String @db.ObjectId
+  author    User     @relation(fields: [authorId], references: [id])
+  movementId String @db.ObjectId
+  movement   FinancialMovement @relation(fields: [movementId], references: [id])
+  @@map("financial_movement_categories")
 }
 
 enum FinancialMovementType {
