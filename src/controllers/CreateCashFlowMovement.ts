@@ -1,24 +1,24 @@
 import { FastifyReply } from "fastify";
-import { CreateFinancialMovementService } from "../services/CreateFinancialMovementService";
-import { FinancialMovementType, FinancialMovement } from "@prisma/client"
+import { CreateCashFlowMovementService } from "../services/CreateCashFlowMovement";
+import { CashFlowMovementType, CashFlowMovement, CashFlowCategory } from "@prisma/client"
 import { AuthenticatedUserRequest } from "../auth/middleware/AuthMiddleware";
 
-export class CreateFinancialMovementController {
+export class CreateCashFlowMovementController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
         
-        const authorId = request.user.id as FinancialMovement["authorId"];
+        const authorId = request.user.id as CashFlowMovement["authorId"];
 
         const { type, value, categories, notes, date } = request.body as {
-            type: FinancialMovementType, 
+            type: CashFlowMovementType, 
             value: number, 
             categories: string[], 
             notes?: string,
             date?: Date
         };
 
-        const createFinancialMovementService = new CreateFinancialMovementService();
+        const createCashFlowMovementService = new CreateCashFlowMovementService();
 
-        const financialMovement = await createFinancialMovementService.handle({
+        const cashFlowMovement = await createCashFlowMovementService.handle({
             authorId,
             type,
             value,
@@ -27,7 +27,7 @@ export class CreateFinancialMovementController {
             date
         });
 
-        reply.send(financialMovement)
+        reply.send(cashFlowMovement)
     
     }
 }

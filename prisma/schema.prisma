@@ -32,7 +32,7 @@ model CashFlowMovement {
   authorId   String                @db.ObjectId
   author     User                  @relation(fields: [authorId], references: [id])
   value      Float
-  type       FinancialMovementType
+  type       CashFlowMovementType
   categories CashFlowCategory[]
   notes      String?
   date       DateTime              @default(now())
@@ -51,7 +51,7 @@ model CashFlowCategory {
   @@map("categories")
 }
 
-enum FinancialMovementType {
+enum CashFlowMovementType {
   INCOME
   EXPENSE
 }

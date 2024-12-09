@@ -1,8 +1,8 @@
 import { FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } from "fastify";
 import { AuthController } from "./auth/AuthController";
 import { AuthenticatedUserRequest, AuthMiddleware } from "./auth/middleware/AuthMiddleware";
-import { CreateFinancialMovementController } from "./controllers/CreateFinancialMovementController";
-import { ListFinancialMovementsController } from "./controllers/ListFinancialMovementsController";
+import { CreateCashFlowMovementController } from "./controllers/CreateCashFlowMovement";
+import { ListCashFlowMovementsController } from "./controllers/ListCashFlow";
 
 export async function router(fastify: FastifyInstance, options: FastifyPluginOptions) {
     fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -20,13 +20,13 @@ export async function router(fastify: FastifyInstance, options: FastifyPluginOpt
     fastify.post('/finances', { preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
         await AuthMiddleware(request, reply)
     }}, async (request: AuthenticatedUserRequest, reply) => {
-        return new CreateFinancialMovementController().handle(request, reply);
+        return new CreateCashFlowMovementController().handle(request, reply);
     });
 
     fastify.get('/finances', {preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
         await AuthMiddleware(request, reply)
     }}, async (request: AuthenticatedUserRequest, reply) => {
-        return new ListFinancialMovementsController().handle(request, reply)
+        return new ListCashFlowMovementsController().handle(request, reply)
     });
 }
 
