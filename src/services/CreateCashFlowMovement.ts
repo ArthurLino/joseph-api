@@ -1,5 +1,6 @@
 import prismaClient from "../prisma";
 import { CashFlowMovementType, CashFlowMovement, CashFlowCategory } from "@prisma/client"
+import { CreateCashFlowCategoryService } from "./CreateCashFlowCategory";
 
 type CreateCashFlowMovementServiceProps = {
     authorId: CashFlowMovement["authorId"];
@@ -15,10 +16,6 @@ export class CreateCashFlowMovementService {
 
         if ( !authorId || !value || !type || !categories ) throw new Error('Missing request data.')
 
-        const existingCashFlowCategories: unknown | CashFlowCategory[] = categories.map(async (category) => {
-            await prismaClient.cashFlowCategory.findUniqueOrThrow({ where: {name: category.toLowerCase()}})
-        }) 
-
         const cashFlowMovement = await prismaClient.cashFlowMovement.create({
             data: {
                 authorId,
@@ -26,7 +23,13 @@ export class CreateCashFlowMovementService {
                 value,
                 notes,
                 date,
-                // categories: typeof existingCashFlowCategories === CashFlowCategory[] && existingCashFlowCategories
+                categories: {
+                    connectOrCreate: categories.map(category => ({
+                        create: { name: category.toLowerCase(), authorId },
+                        where: { name: category.toLowerCase() }
+                    }))
+                }
+            
             }
         });
 

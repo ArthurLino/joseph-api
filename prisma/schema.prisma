@@ -28,25 +28,26 @@ model User {
 }
 
 model CashFlowMovement {
-  id         String                @id @default(auto()) @map("_id") @db.ObjectId
-  authorId   String                @db.ObjectId
-  author     User                  @relation(fields: [authorId], references: [id])
-  value      Float
-  type       CashFlowMovementType
-  categories CashFlowCategory[]
-  notes      String?
-  date       DateTime              @default(now())
+  id          String               @id @default(auto()) @map("_id") @db.ObjectId
+  authorId    String               @db.ObjectId
+  author      User                 @relation(fields: [authorId], references: [id])
+  value       Float
+  type        CashFlowMovementType
+  categoryIDs String[]             @db.ObjectId
+  categories  CashFlowCategory[]   @relation(fields: [categoryIDs], references: [id])
+  notes       String?
+  date        DateTime             @default(now())
 
   @@map("movements")
 }
 
 model CashFlowCategory {
-  id         String            @id @default(auto()) @map("_id") @db.ObjectId
-  name       String            @unique
-  authorId   String?           @db.ObjectId
-  author     User?             @relation(fields: [authorId], references: [id])
-  movementId String?           @db.ObjectId
-  movement   CashFlowMovement? @relation(fields: [movementId], references: [id])
+  id          String             @id @default(auto()) @map("_id") @db.ObjectId
+  name        String             @unique
+  authorId    String?            @db.ObjectId
+  author      User?              @relation(fields: [authorId], references: [id])
+  movementIDs String[]           @db.ObjectId
+  movements   CashFlowMovement[] @relation(fields: [movementIDs], references: [id])
 
   @@map("categories")
 }

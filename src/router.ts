@@ -3,6 +3,7 @@ import { AuthController } from "./auth/AuthController";
 import { AuthenticatedUserRequest, AuthMiddleware } from "./auth/middleware/AuthMiddleware";
 import { CreateCashFlowMovementController } from "./controllers/CreateCashFlowMovement";
 import { ListCashFlowMovementsController } from "./controllers/ListCashFlow";
+import { CreateCashFlowCategoryController } from "./controllers/CreateCashFlowCategory";
 
 export async function router(fastify: FastifyInstance, options: FastifyPluginOptions) {
     fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -27,6 +28,18 @@ export async function router(fastify: FastifyInstance, options: FastifyPluginOpt
         await AuthMiddleware(request, reply)
     }}, async (request: AuthenticatedUserRequest, reply) => {
         return new ListCashFlowMovementsController().handle(request, reply)
+    });
+
+    fastify.post('/finances/categories', {preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+        await AuthMiddleware(request, reply)
+    }}, async (request: AuthenticatedUserRequest, reply) => {
+        return new CreateCashFlowCategoryController().handle(request, reply);
+    });
+
+    fastify.get('/finances/categories', {preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+        await AuthMiddleware(request, reply)
+    }}, async (request: AuthenticatedUserRequest, reply) => {
+        // return new CreateCashFlowCategoryController().handle(request, reply);
     });
 }
 
