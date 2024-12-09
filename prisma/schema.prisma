@@ -14,40 +14,44 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  email     String  @unique
-  password  String @map("password")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  cashFlow FinancialMovement[]
-  userFinancialCategories FinancialCategory[]
+  id                 String             @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  email              String             @unique
+  password           String             @map("password")
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  balance            Float              @default(0.0)
+  cashFlow           CashFlowMovement[]
+  cashFlowCategories CashFlowCategory[]
+
   @@map("users")
 }
 
-model FinancialMovement {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  authorId  String @db.ObjectId
-  author    User     @relation(fields: [authorId], references: [id])
-  value     Float
-  type      FinancialMovementType
-  categories FinancialCategory[]
-  notes     String?
-  date      DateTime @default(now())
-  @@map("financial_movements")
+model CashFlowMovement {
+  id         String                @id @default(auto()) @map("_id") @db.ObjectId
+  authorId   String                @db.ObjectId
+  author     User                  @relation(fields: [authorId], references: [id])
+  value      Float
+  type       FinancialMovementType
+  categories CashFlowCategory[]
+  notes      String?
+  date       DateTime              @default(now())
+
+  @@map("movements")
 }
 
-model FinancialCategory {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  authorId  String @db.ObjectId
-  author    User     @relation(fields: [authorId], references: [id])
-  movementId String @db.ObjectId
-  movement   FinancialMovement @relation(fields: [movementId], references: [id])
-  @@map("financial_movement_categories")
+model CashFlowCategory {
+  id         String            @id @default(auto()) @map("_id") @db.ObjectId
+  name       String            @unique
+  authorId   String?           @db.ObjectId
+  author     User?             @relation(fields: [authorId], references: [id])
+  movementId String?           @db.ObjectId
+  movement   CashFlowMovement? @relation(fields: [movementId], references: [id])
+
+  @@map("categories")
 }
 
 enum FinancialMovementType {
-    INCOME
-    EXPENSE
+  INCOME
+  EXPENSE
 }
