@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
-import { publicRoutes } from './routes/public.routes';
-import { userRoutes } from './routes/user.routes'
+import { publicRoutes } from './routes/public';
+import { userRoutes } from './routes/user'
 
 const server = Fastify({ 
     logger: true 
