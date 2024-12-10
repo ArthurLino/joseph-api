@@ -3,10 +3,10 @@ import { AuthenticatedUserRequest, AuthValidation } from "@auth/AuthValidation";
 import { CreateCashFlowMovementController } from "@controllers/CreateCashFlowMovement";
 import { ListCashFlowMovementsController } from "@controllers/ListCashFlow";
 import { CreateCashFlowCategoryController } from "@controllers/CreateCashFlowCategory";
-import { AuthHook } from "@plugins/AuthHook";
+import authHook from "@hooks/authHook";
 
 export async function userRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
-    fastify.addHook('preValidation', AuthHook)
+    fastify.addHook('preValidation', authHook)
 
     fastify.post('/finances', async (request: AuthenticatedUserRequest, reply) => {
         return new CreateCashFlowMovementController().handle(request, reply);
