@@ -3,20 +3,20 @@ import cors from '@fastify/cors';
 import { publicRoutes } from './routes/public.routes';
 import { userRoutes } from './routes/user.routes'
 
-const app = Fastify({ 
+const server = Fastify({ 
     logger: true 
 });
 
 const start = async () => {
 
-    await app.register(cors);
-    await app.register(publicRoutes, { prefix: '/api' });
-    await app.register(userRoutes, {
+    await server.register(cors);
+    await server.register(publicRoutes, { prefix: '/api' });
+    await server.register(userRoutes, {
         prefix: '/api/user',
     })
 
     try {
-        await app.listen({port: 8080})
+        await server.listen({port: 8080})
     }
     catch (err) {
         process.exit(1)
