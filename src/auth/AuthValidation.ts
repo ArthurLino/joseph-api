@@ -1,10 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { AuthService } from "./AuthService";
+import { AuthService } from "@auth/AuthService";
 import { JwtPayload } from "jsonwebtoken";
 
 export type AuthenticatedUserRequest = FastifyRequest & JwtPayload;
 
-export const AuthMiddleware = (request: AuthenticatedUserRequest, reply: FastifyReply) => {
+export const AuthValidation = (request: AuthenticatedUserRequest, reply: FastifyReply) => {
     const token = request.headers.authorization?.replace(/^Bearer /, "");
 
     if (!token) return reply.status(401).send({ error: 'Access Denied' });

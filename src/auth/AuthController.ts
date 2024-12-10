@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { AuthService } from "./AuthService";
+import { AuthService } from "@auth/AuthService";
 
 export class AuthController {
     async handleSignUp(request: FastifyRequest, reply: FastifyReply) {

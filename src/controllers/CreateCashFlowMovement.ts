@@ -1,7 +1,7 @@
 import { FastifyReply } from "fastify";
-import { CreateCashFlowMovementService } from "../services/CreateCashFlowMovement";
-import { CashFlowMovementType, CashFlowMovement, CashFlowCategory } from "@prisma/client"
-import { AuthenticatedUserRequest } from "../auth/AuthMiddleware";
+import { CreateCashFlowMovementService } from "@services/CreateCashFlowMovement";
+import { CashFlowMovementType, CashFlowMovement } from "@prisma/client"
+import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class CreateCashFlowMovementController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {

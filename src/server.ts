@@ -11,7 +11,9 @@ const start = async () => {
 
     await app.register(cors);
     await app.register(publicRoutes, { prefix: '/api' });
-    await app.register(userRoutes, {prefix: '/api/user'})
+    await app.register(userRoutes, {
+        prefix: '/api/user',
+    })
 
     try {
         await app.listen({port: 8080})

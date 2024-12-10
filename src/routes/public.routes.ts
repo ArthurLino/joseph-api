@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginOptions, FastifyRequest, FastifyReply } from "fastify";
-import { AuthController } from "../auth/AuthController";
+import { AuthController } from "@auth/AuthController";
 
 export async function publicRoutes(fastify: FastifyInstance) {
     fastify.get('/', async () => {

@@ -1,7 +1,7 @@
 import { FastifyReply } from "fastify";
-import { AuthenticatedUserRequest } from "../auth/AuthMiddleware";
+import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 import { CashFlowMovement } from "@prisma/client";
-import { ListCashFlowMovementsService } from "../services/ListCashFlow"
+import { ListCashFlowMovementsService } from "@services/ListCashFlow"
 
 export class ListCashFlowMovementsController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
