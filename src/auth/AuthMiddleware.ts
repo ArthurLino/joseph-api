@@ -1,9 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { AuthService } from "../AuthService";
+import { AuthService } from "./AuthService";
 import { JwtPayload } from "jsonwebtoken";
 
 export type AuthenticatedUserRequest = FastifyRequest & JwtPayload;
-// type UserRequest = FastifyRequest & { user?: {id: string, email: string} };
 
 export const AuthMiddleware = (request: AuthenticatedUserRequest, reply: FastifyReply) => {
     const token = request.headers.authorization?.replace(/^Bearer /, "");

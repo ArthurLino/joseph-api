@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify";
-import { AuthenticatedUserRequest } from "../auth/middleware/AuthMiddleware";
+import { AuthenticatedUserRequest } from "../auth/AuthMiddleware";
 import { CashFlowMovement } from "@prisma/client";
 import { ListCashFlowMovementsService } from "../services/ListCashFlow"
 
