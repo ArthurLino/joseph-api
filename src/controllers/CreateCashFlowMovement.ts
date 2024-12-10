@@ -27,7 +27,7 @@ export class CreateCashFlowMovementController {
             date
         });
 
-        reply.send(cashFlowMovement)
+        reply.code(201).send(cashFlowMovement)
     
     }
 }
