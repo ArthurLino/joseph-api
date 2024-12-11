@@ -1,9 +1,15 @@
 import prismaClient from "../prisma";
+import { CashFlowQueryProps } from "@controllers/ListCashFlow";
 
 export class ListCashFlowMovementsService {
-    async execute(authorId : string) {
+    async execute(authorId : string, query?: CashFlowQueryProps) {
 
-        const cashFlowMovementsList = prismaClient.cashFlowMovement.findMany({ where: { authorId: authorId}})
+        const cashFlowMovementsList = prismaClient.cashFlowMovement.findMany({ 
+            where: { 
+                authorId: authorId,
+                ...query
+            }
+        })
 
         if ( !cashFlowMovementsList ) throw new Error("You have no financial movement in your cashflow.")
             

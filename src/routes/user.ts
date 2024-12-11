@@ -17,6 +17,10 @@ export async function userRoutes(fastify: FastifyInstance, options: FastifyPlugi
         return new ListCashFlowMovementsController().handle(request, reply)
     });
 
+    fastify.get('/finances/:type', async (request: AuthenticatedUserRequest, reply) => {
+        return new ListCashFlowMovementsController().handle(request, reply)
+    });
+
     fastify.post('/finances/categories', async (request: AuthenticatedUserRequest, reply) => {
         return new CreateCashFlowCategoryController().handle(request, reply);
     });
