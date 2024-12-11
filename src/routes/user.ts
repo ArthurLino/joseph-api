@@ -3,6 +3,7 @@ import { AuthenticatedUserRequest, AuthValidation } from "@auth/AuthValidation";
 import { CreateCashFlowMovementController } from "@controllers/CreateCashFlowMovement";
 import { ListCashFlowMovementsController } from "@controllers/ListCashFlow";
 import { CreateCashFlowCategoryController } from "@controllers/CreateCashFlowCategory";
+import { ListCashFlowCategoriesController } from "@controllers/ListCashFlowCategories";
 import authHook from "@hooks/authHook";
 
 export async function userRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
@@ -21,6 +22,6 @@ export async function userRoutes(fastify: FastifyInstance, options: FastifyPlugi
     });
 
     fastify.get('/finances/categories', async (request: AuthenticatedUserRequest, reply) => {
-        // return new CreateCashFlowCategoryController().handle(request, reply);
+        return new ListCashFlowCategoriesController().handle(request, reply);
     });
 }

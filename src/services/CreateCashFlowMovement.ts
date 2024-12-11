@@ -12,7 +12,7 @@ type CreateCashFlowMovementServiceProps = {
 }
 
 export class CreateCashFlowMovementService {
-    async handle({authorId, type, value, categories, notes, date}: CreateCashFlowMovementServiceProps) {
+    async execute({authorId, type, value, categories, notes, date}: CreateCashFlowMovementServiceProps) {
 
         if ( !authorId || !value || !type || !categories ) throw new Error('Missing request data.')
 
