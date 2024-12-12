@@ -18,7 +18,7 @@ export class CreateCashFlowMovementController {
 
         const createCashFlowMovementService = new CreateCashFlowMovementService();
 
-        const cashFlowMovement = await createCashFlowMovementService.handle({
+        const cashFlowMovement = await createCashFlowMovementService.execute({
             authorId,
             type,
             value,

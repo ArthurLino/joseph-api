@@ -3,30 +3,31 @@ import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 import { CashFlowMovement, CashFlowMovementType } from "@prisma/client";
 import { ListCashFlowMovementsService } from "@services/ListCashFlow"
 
-export type CashFlowQueryProps = {
+export type RouteQueryProps = {
     type: CashFlowMovementType;
+    date: Date;
 }
 
 export class ListCashFlowMovementsController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
         
         const authorId = request.user.id as CashFlowMovement["authorId"];
-
-        const queryParams = request.params ? 
-        request.params as CashFlowQueryProps : 
-        {} as CashFlowQueryProps;
-
-        if ( queryParams.type && !Object.values(["income", "expense"]).includes(queryParams.type) ) {
-            reply.code(400).send({ error: "Invalid type of cashflow movement sent." });
-        }
-
-        const { type } = queryParams;
-
+        
         const listCashFlowMovementsService = new ListCashFlowMovementsService();
 
-        const cashFlowMovementsList = await listCashFlowMovementsService.execute(authorId, {
-            type: type.toUpperCase()
-        } as CashFlowQueryProps);
+        if ( request.query && Object.values(request.query).length == 0 ) {
+            reply.code(200).send(await listCashFlowMovementsService.execute(authorId))
+        }
+
+        const query = {} as RouteQueryProps;
+
+        const { type, date } = request.query ? request.query as RouteQueryProps : {} as RouteQueryProps;
+
+        if ( type && Object.values(CashFlowMovementType).includes(type.toUpperCase() as CashFlowMovementType)) { 
+            query.type = type.toUpperCase() as CashFlowMovementType;
+        } else return reply.callNotFound();
+        
+        const cashFlowMovementsList = await listCashFlowMovementsService.execute(authorId, query);        
 
         reply.code(200).send(cashFlowMovementsList) 
     }

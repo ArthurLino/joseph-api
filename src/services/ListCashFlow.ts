@@ -1,8 +1,8 @@
 import prismaClient from "../prisma";
-import { CashFlowQueryProps } from "@controllers/ListCashFlow";
+import { RouteQueryProps } from "@controllers/ListCashFlow";
 
 export class ListCashFlowMovementsService {
-    async execute(authorId : string, query?: CashFlowQueryProps) {
+    async execute(authorId : string, query?: RouteQueryProps) {
 
         const cashFlowMovementsList = prismaClient.cashFlowMovement.findMany({ 
             where: { 
