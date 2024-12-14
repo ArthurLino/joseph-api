@@ -4,8 +4,9 @@ import { CreateCashFlowMovementController } from "@controllers/CreateCashFlowMov
 import { ListCashFlowMovementsController } from "@controllers/ListCashFlow";
 import { CreateCashFlowCategoryController } from "@controllers/CreateCashFlowCategory";
 import { ListCashFlowCategoriesController } from "@controllers/ListCashFlowCategories";
-import authHook from "@hooks/authHook";
 import { DeleteCashFlowMovementController } from "@controllers/DeleteCashFlowMovement";
+import { UpdateCashFlowMovementController } from "@controllers/UpdateCashFlowMovement";
+import authHook from "@hooks/authHook";
 
 export async function userRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
     fastify.addHook('preValidation', authHook)
@@ -20,6 +21,10 @@ export async function userRoutes(fastify: FastifyInstance, options: FastifyPlugi
 
     fastify.delete('/finances/:id', async (request: AuthenticatedUserRequest, reply) => {
         return new DeleteCashFlowMovementController().handle(request, reply);
+    });
+
+    fastify.put('/finances/:id', async (request: AuthenticatedUserRequest, reply) => {
+        return new UpdateCashFlowMovementController().handle(request, reply);
     });
 
     fastify.post('/finances/categories', async (request: AuthenticatedUserRequest, reply) => {

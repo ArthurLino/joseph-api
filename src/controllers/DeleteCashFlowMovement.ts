@@ -1,5 +1,4 @@
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
-import { CashFlowMovement } from "@prisma/client";
 import { DeleteCashFlowMovementService } from "@services/DeleteCashFlowMovement";
 import { FastifyReply } from "fastify";
 
@@ -14,6 +13,6 @@ export class DeleteCashFlowMovementController {
 
         const deleteCashFlowMovementService = await new DeleteCashFlowMovementService().execute({ authorId, id });
 
-        reply.code(204).send(deleteCashFlowMovementService);
+        reply.send({message: 'Object deleted.', data: deleteCashFlowMovementService}).code(200);
     }
 }
