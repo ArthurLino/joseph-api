@@ -23,9 +23,7 @@ export class ListCashFlowMovementsService {
         if ( to && !isNaN(new Date(to).getTime())) filters["to"] = new Date(to)
 
         if ( category ) filters["category"] = category
-
-        console.log(filters)
-
+        
         const cashFlowMovementsList = prismaClient.cashFlowMovement.findMany({ 
             where: { 
                 authorId: authorId,
