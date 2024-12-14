@@ -14,21 +14,23 @@ export class ListCashFlowMovementsController {
 
         if ( query && Object.keys(query).length > 0 ) {
 
-            const a = Object.keys(query).map( key => { 
+            const hasValidKeys = Object.keys(query).map( key => { 
                 
                 if ( !query[key] ) return false
 
-                return ["type", "date", "category"].includes(key) ? true : false 
+                return ["type", "date", "from", "to", "category"].includes(key) ? true : false 
 
             })
 
-            if ( a.includes(false) ) return reply.code(400).send({ error: "Invalid query parameters." })
+            if ( hasValidKeys.includes(false) ) return reply.code(400).send({ error: "Invalid query parameters." })
 
         }
 
         const cashFlowMovementsList = await listCashFlowMovementsService.execute(authorId, request.query as { 
             type: string;
             date: Date;
+            from: Date;
+            to: Date;
             category: string;
         });        
 
