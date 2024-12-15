@@ -1,5 +1,5 @@
 import { CashFlowActivityType } from "@prisma/client";
-import prismaClient from "../prisma";
+import prismaClient from "../../prisma";
 
 type ListCashFlowActivitiesQueryProps = {
     type: string;

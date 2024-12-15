@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify"
-import { DeleteCashFlowActivityService } from "@services/DeleteActivityService";
+import { DeleteCashFlowActivityService } from "@activityServices/DeleteActivityService";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 ;
 

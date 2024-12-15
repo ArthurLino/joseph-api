@@ -1,6 +1,6 @@
 import { FastifyReply } from "fastify";
 import { CashFlowActivityType } from "@prisma/client";
-import { UpdateCashFlowMovementService } from "@services/UpdateActivityService";
+import { UpdateCashFlowMovementService } from "@activityServices/UpdateActivityService";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class UpdateActivitiesController {

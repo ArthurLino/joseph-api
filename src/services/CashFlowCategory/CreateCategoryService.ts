@@ -1,4 +1,4 @@
-import prismaClient from "../prisma";
+import prismaClient from "../../prisma";
 
 export class CreateCategoryService {
     async execute({ name, authorId }: {name: string, authorId: string}) {

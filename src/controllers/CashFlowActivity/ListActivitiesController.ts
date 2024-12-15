@@ -1,12 +1,12 @@
 import { FastifyReply } from "fastify";
 import { CashFlowActivity } from "@prisma/client";
-import { ListCashFlowActivitiesService } from "@services/ListActivitiesService"
+import { ListCashFlowActivitiesService } from "@activityServices/ListActivitiesService"
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class ListActivitiesController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
         
-        const authorId = request.user.id as CashFlowActivity["authorId"];
+        const authorId = request.user.id as CashFlowActivity["authorID"];
         
         const listActivitiesService = new ListCashFlowActivitiesService();
 

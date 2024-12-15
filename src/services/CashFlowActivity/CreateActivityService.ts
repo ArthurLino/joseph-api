@@ -1,4 +1,4 @@
-import prismaClient from "../prisma";
+import prismaClient from "../../prisma";
 import { CashFlowActivityType, CashFlowActivity } from "@prisma/client"
 
 type CreateCashFlowActivityServiceProps = {

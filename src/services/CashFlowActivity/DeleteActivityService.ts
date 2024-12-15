@@ -1,4 +1,4 @@
-import prismaClient from "../prisma";
+import prismaClient from "../../prisma";
 import { ObjectId } from "mongodb";
 
 export class DeleteCashFlowActivityService {

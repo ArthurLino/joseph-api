@@ -1,4 +1,4 @@
-import prismaClient from "../prisma";
+import prismaClient from "../../prisma";
 import { CashFlowActivity, CashFlowActivityType } from "@prisma/client";
 import { ObjectId } from "mongodb";
 

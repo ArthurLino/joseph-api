@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
-import { CreateActivityController } from "@controllers/CreateActivityController";
-import { ListActivitiesController } from "@controllers/ListActivitiesController";
-import { CreateCategoryController } from "@controllers/CreateCategoryController";
-import { ListCategoriesController } from "@controllers/ListCategoriesController";
-import { DeleteActivityController } from "@controllers/DeleteActivityController";
-import { UpdateActivitiesController } from "@controllers/UpdateActivityController";
+import { CreateActivityController } from "@activityControllers/CreateActivityController";
+import { ListActivitiesController } from "@activityControllers/ListActivitiesController";
+import { DeleteActivityController } from "@activityControllers/DeleteActivityController";
+import { UpdateActivitiesController } from "@activityControllers/UpdateActivityController";
+import { CreateCategoryController } from "@categoryControllers/CreateCategoryController";
+import { ListCategoriesController } from "@categoryControllers/ListCategoriesController";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 import authHook from "@hooks/authHook";
 

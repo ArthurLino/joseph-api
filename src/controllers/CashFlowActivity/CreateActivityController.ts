@@ -1,12 +1,12 @@
 import { FastifyReply } from "fastify";
 import { CashFlowActivity } from "@prisma/client"
-import { CreateCashFlowActivityService } from "@services/CreateActivityService";
+import { CreateCashFlowActivityService } from "@activityServices/CreateActivityService";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class CreateActivityController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
         
-        const authorId = request.user.id as CashFlowActivity["authorId"];
+        const authorId = request.user.id as CashFlowActivity["authorID"];
 
         const { type, value, categories, notes, date } = request.body as {
             type: string, 
