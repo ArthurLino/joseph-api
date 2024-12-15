@@ -1,9 +1,8 @@
 import prismaClient from "../prisma";
-import { CashFlowMovementType, CashFlowMovement, CashFlowCategory } from "@prisma/client"
-import { CreateCashFlowCategoryService } from "./CreateCashFlowCategory";
+import { CashFlowActivityType, CashFlowActivity } from "@prisma/client"
 
-type CreateCashFlowMovementServiceProps = {
-    authorId: CashFlowMovement["authorId"];
+type CreateCashFlowActivityServiceProps = {
+    authorId: CashFlowActivity["authorId"];
     type: string;
     value: number;
     categories: string[];
@@ -11,17 +10,17 @@ type CreateCashFlowMovementServiceProps = {
     date?: Date;
 }
 
-export class CreateCashFlowMovementService {
-    async execute({authorId, type, value, categories, notes, date}: CreateCashFlowMovementServiceProps) {
+export class CreateCashFlowActivityService {
+    async execute({authorId, type, value, categories, notes, date}: CreateCashFlowActivityServiceProps) {
 
         if ( !authorId || !value || !type || !categories ) throw new Error('Missing request data.')
         
         if ( !['INCOME', 'EXPENSE'].includes(type.toUpperCase()) ) throw new Error('Invalid type.')
 
-        const cashFlowMovement = await prismaClient.cashFlowMovement.create({
+        const newActivity = await prismaClient.cashFlowActivity.create({
             data: {
                 authorId,
-                type: type.toUpperCase() as CashFlowMovementType,
+                type: type.toUpperCase() as CashFlowActivityType,
                 value,
                 notes,
                 date,
@@ -35,6 +34,6 @@ export class CreateCashFlowMovementService {
             }
         });
 
-        return cashFlowMovement
+        return newActivity;
     }
 }

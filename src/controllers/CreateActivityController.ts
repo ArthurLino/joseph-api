@@ -1,12 +1,12 @@
 import { FastifyReply } from "fastify";
-import { CreateCashFlowMovementService } from "@services/CreateCashFlowMovement";
-import { CashFlowMovementType, CashFlowMovement } from "@prisma/client"
+import { CashFlowActivity } from "@prisma/client"
+import { CreateCashFlowActivityService } from "@services/CreateActivityService";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
-export class CreateCashFlowMovementController {
+export class CreateActivityController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
         
-        const authorId = request.user.id as CashFlowMovement["authorId"];
+        const authorId = request.user.id as CashFlowActivity["authorId"];
 
         const { type, value, categories, notes, date } = request.body as {
             type: string, 
@@ -16,9 +16,9 @@ export class CreateCashFlowMovementController {
             date?: Date
         };
 
-        const createCashFlowMovementService = new CreateCashFlowMovementService();
+        const createActivityService = new CreateCashFlowActivityService();
 
-        const cashFlowMovement = await createCashFlowMovementService.execute({
+        const transaction = await createActivityService.execute({
             authorId,
             type,
             value,
@@ -27,7 +27,7 @@ export class CreateCashFlowMovementController {
             date
         });
 
-        reply.code(201).send(cashFlowMovement)
+        reply.code(201).send(transaction)
     
     }
 }

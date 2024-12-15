@@ -1,23 +1,21 @@
-import { ObjectId } from "mongodb";
 import prismaClient from "../prisma";
+import { ObjectId } from "mongodb";
 
-export class DeleteCashFlowMovementService {
+export class DeleteCashFlowActivityService {
     async execute({ authorId, id }: { authorId: string; id: string; }) {
 
         if ( !ObjectId.isValid(id) || !authorId ) throw new Error('Missing request data.');
         
         try {
             
-            const deletedMovement = await prismaClient.cashFlowMovement.delete({
+            const deletedActivity = await prismaClient.cashFlowActivity.delete({
                 where: {
                     authorId: authorId,
                     id: id
                 }
             });
 
-            console.log(deletedMovement);
-
-            return deletedMovement;
+            return deletedActivity;
 
         } catch (error) {
             throw new Error(`Cannot complete operation.`);

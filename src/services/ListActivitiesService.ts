@@ -1,7 +1,7 @@
-import { CashFlowCategory, CashFlowMovementType } from "@prisma/client";
+import { CashFlowActivityType } from "@prisma/client";
 import prismaClient from "../prisma";
 
-type ListCashFlowMovementsQueryProps = {
+type ListCashFlowActivitiesQueryProps = {
     type: string;
     date: Date;
     from: Date;
@@ -9,12 +9,12 @@ type ListCashFlowMovementsQueryProps = {
     category: string;
 }
 
-export class ListCashFlowMovementsService {
-    async execute(authorId : string, {type, date, from, to, category}: ListCashFlowMovementsQueryProps) {
+export class ListCashFlowActivitiesService {
+    async execute(authorId : string, {type, date, from, to, category}: ListCashFlowActivitiesQueryProps) {
         
         if ( !authorId ) throw new Error('Missing request data.')
 
-        const filters = {} as ListCashFlowMovementsQueryProps
+        const filters = {} as ListCashFlowActivitiesQueryProps
 
         if ( type && (type.toUpperCase() == "INCOME" || type.toUpperCase() == "EXPENSE") ) filters["type"] = type.toUpperCase()
 
@@ -26,11 +26,11 @@ export class ListCashFlowMovementsService {
 
         if ( category ) filters["category"] = category
         
-        const cashFlowMovementsList = prismaClient.cashFlowMovement.findMany({ 
+        const cashFlowActivitiesList = prismaClient.cashFlowActivity.findMany({ 
             where: { 
                 authorId: authorId,
                 type: {
-                    equals: filters.type as CashFlowMovementType
+                    equals: filters.type as CashFlowActivityType
                 },
                 date: {
                     equals: filters.date,
@@ -45,9 +45,9 @@ export class ListCashFlowMovementsService {
             },
         })
 
-        if ( !cashFlowMovementsList ) throw new Error("You have no financial movement in your cashflow.")
+        if ( !cashFlowActivitiesList ) throw new Error("You have no financial movement in your cashflow.");
             
-        return cashFlowMovementsList
+        return cashFlowActivitiesList;
 
     }
 }

@@ -1,11 +1,11 @@
-import { ObjectId } from "mongodb";
 import prismaClient from "../prisma";
-import { CashFlowMovement, CashFlowMovementType } from "@prisma/client";
+import { CashFlowActivity, CashFlowActivityType } from "@prisma/client";
+import { ObjectId } from "mongodb";
 
 type UpdateCashFlowMovementServiceProps = {
-    authorId: CashFlowMovement["authorId"];
+    authorId: CashFlowActivity["authorId"];
     id: string;
-    type: CashFlowMovementType;
+    type: CashFlowActivityType;
     value: number;
     categories: string[];
     notes: string;
@@ -28,16 +28,16 @@ export class UpdateCashFlowMovementService {
         
         Object.entries(data).forEach(([key, value]: [string, any]) => { if (value === undefined) delete data[key] });
 
-        const cashFlowMovementExists = await prismaClient.cashFlowMovement.findFirst({
+        const activityExists = await prismaClient.cashFlowActivity.findFirst({
             where: {
                 id: id, 
                 // authorId: authorId
             }
         });
 
-        if ( !cashFlowMovementExists ) throw new Error("Cash flow movement does not exist.");
+        if ( !activityExists ) throw new Error("Cash flow movement does not exist.");
 
-        const cashFlowMovement = await prismaClient.cashFlowMovement.update({
+        const activity = await prismaClient.cashFlowActivity.update({
             where: {
                 id: id,
                 authorId: authorId
@@ -55,7 +55,7 @@ export class UpdateCashFlowMovementService {
 
         });
 
-        return cashFlowMovement;
+        return activity;
 
     }
 }

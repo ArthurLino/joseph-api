@@ -1,14 +1,14 @@
 import { FastifyReply } from "fastify";
+import { CashFlowActivity } from "@prisma/client";
+import { ListCashFlowActivitiesService } from "@services/ListActivitiesService"
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
-import { CashFlowMovement } from "@prisma/client";
-import { ListCashFlowMovementsService } from "@services/ListCashFlow"
 
-export class ListCashFlowMovementsController {
+export class ListActivitiesController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
         
-        const authorId = request.user.id as CashFlowMovement["authorId"];
+        const authorId = request.user.id as CashFlowActivity["authorId"];
         
-        const listCashFlowMovementsService = new ListCashFlowMovementsService();
+        const listActivitiesService = new ListCashFlowActivitiesService();
 
         const query = request.query as { [key: string]: any };
 
@@ -26,7 +26,7 @@ export class ListCashFlowMovementsController {
 
         }
 
-        const cashFlowMovementsList = await listCashFlowMovementsService.execute(authorId, request.query as { 
+        const activitiesList = await listActivitiesService.execute(authorId, request.query as { 
             type: string;
             date: Date;
             from: Date;
@@ -34,6 +34,6 @@ export class ListCashFlowMovementsController {
             category: string;
         });        
 
-        reply.code(200).send(cashFlowMovementsList) 
+        reply.code(200).send(activitiesList) 
     }
 }
