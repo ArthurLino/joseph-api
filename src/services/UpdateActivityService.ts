@@ -3,7 +3,7 @@ import { CashFlowActivity, CashFlowActivityType } from "@prisma/client";
 import { ObjectId } from "mongodb";
 
 type UpdateCashFlowMovementServiceProps = {
-    authorId: CashFlowActivity["authorId"];
+    authorId: CashFlowActivity["authorID"];
     id: string;
     type: CashFlowActivityType;
     value: number;
@@ -40,7 +40,7 @@ export class UpdateCashFlowMovementService {
         const activity = await prismaClient.cashFlowActivity.update({
             where: {
                 id: id,
-                authorId: authorId
+                authorID: authorId
             },
             data: {
                 ...data,

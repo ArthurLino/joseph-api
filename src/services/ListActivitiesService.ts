@@ -28,7 +28,7 @@ export class ListCashFlowActivitiesService {
         
         const cashFlowActivitiesList = prismaClient.cashFlowActivity.findMany({ 
             where: { 
-                authorId: authorId,
+                authorID: authorId,
                 type: {
                     equals: filters.type as CashFlowActivityType
                 },

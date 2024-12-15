@@ -11,7 +11,7 @@ export class CreateCategoryService {
         const newCategory = await prismaClient.cashFlowCategory.create({
             data: {
                 name: name.toLowerCase(),
-                authorId
+                authorID: authorId
             }
         });
 

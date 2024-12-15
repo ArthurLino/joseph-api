@@ -5,7 +5,7 @@ export class ListCashFlowCategoriesService {
 
         if ( !authorId ) throw new Error('Missing request data.')
 
-        const cashFlowCategories = await prismaClient.cashFlowCategory.findMany({ where: { authorId } });
+        const cashFlowCategories = await prismaClient.cashFlowCategory.findMany({ where: { authorID: authorId } });
 
         if (!cashFlowCategories) throw new Error('No categories found for this user.');
 

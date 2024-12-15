@@ -10,7 +10,7 @@ export class DeleteCashFlowActivityService {
             
             const deletedActivity = await prismaClient.cashFlowActivity.delete({
                 where: {
-                    authorId: authorId,
+                    authorID: authorId,
                     id: id
                 }
             });

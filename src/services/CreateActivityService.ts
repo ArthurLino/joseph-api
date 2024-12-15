@@ -2,7 +2,7 @@ import prismaClient from "../prisma";
 import { CashFlowActivityType, CashFlowActivity } from "@prisma/client"
 
 type CreateCashFlowActivityServiceProps = {
-    authorId: CashFlowActivity["authorId"];
+    authorId: CashFlowActivity["authorID"];
     type: string;
     value: number;
     categories: string[];
@@ -19,7 +19,7 @@ export class CreateCashFlowActivityService {
 
         const newActivity = await prismaClient.cashFlowActivity.create({
             data: {
-                authorId,
+                authorID: authorId,
                 type: type.toUpperCase() as CashFlowActivityType,
                 value,
                 notes,
