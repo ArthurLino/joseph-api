@@ -1,9 +1,14 @@
+import { ObjectId } from "mongodb";
 import prismaClient from "src/prisma";
 
 export class DeleteCashFlowCategoryService {
     async execute({ authorId, id }: { authorId: string, id: string }) {
 
-        if (!id || !authorId) throw new Error('Missing request data.');
+        if ( !ObjectId.isValid(id) || !authorId ) throw new Error('Missing request data.');
+
+        const categoryExists = await prismaClient.cashFlowCategory.findFirst({ where: { id, authorID: authorId } });
+
+        if (!categoryExists) throw new Error('Category not found.');
 
         try {
         
@@ -14,7 +19,7 @@ export class DeleteCashFlowCategoryService {
         } catch (error) {
 
             throw new Error(`Cannot complete operation.\n ${error}`);
-            
+
         }
     }
 }
