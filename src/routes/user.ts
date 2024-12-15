@@ -5,6 +5,7 @@ import { DeleteActivityController } from "@activityControllers/DeleteActivityCon
 import { UpdateActivitiesController } from "@activityControllers/UpdateActivityController";
 import { CreateCategoryController } from "@categoryControllers/CreateCategoryController";
 import { ListCategoriesController } from "@categoryControllers/ListCategoriesController";
+import { DeleteCategoryController } from "@categoryControllers/DeleteCategoryController";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 import authHook from "@hooks/authHook";
 
@@ -33,5 +34,9 @@ export async function userRoutes(fastify: FastifyInstance) {
 
     fastify.get('/finances/categories', async (request: AuthenticatedUserRequest, reply) => {
         return new ListCategoriesController().handle(request, reply);
+    });
+
+    fastify.delete('/finances/categories/:id', async (request: AuthenticatedUserRequest, reply) => {
+        return new DeleteCategoryController().handle(request, reply);
     });
 }
