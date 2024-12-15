@@ -2,10 +2,12 @@ import { FastifyInstance } from "fastify";
 import { CreateActivityController } from "@activityControllers/CreateActivityController";
 import { ListActivitiesController } from "@activityControllers/ListActivitiesController";
 import { DeleteActivityController } from "@activityControllers/DeleteActivityController";
-import { UpdateActivitiesController } from "@activityControllers/UpdateActivityController";
+import { UpdateActivityController } from "@activityControllers/UpdateActivityController";
 import { CreateCategoryController } from "@categoryControllers/CreateCategoryController";
 import { ListCategoriesController } from "@categoryControllers/ListCategoriesController";
 import { DeleteCategoryController } from "@categoryControllers/DeleteCategoryController";
+import { UpdateCategoryController } from "@categoryControllers/UpdateCategoryController";
+
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 import authHook from "@hooks/authHook";
 
@@ -25,7 +27,7 @@ export async function userRoutes(fastify: FastifyInstance) {
     });
 
     fastify.put('/finances/:id', async (request: AuthenticatedUserRequest, reply) => {
-        return new UpdateActivitiesController().handle(request, reply);
+        return new UpdateActivityController().handle(request, reply);
     });
 
     fastify.post('/finances/categories', async (request: AuthenticatedUserRequest, reply) => {
@@ -38,5 +40,9 @@ export async function userRoutes(fastify: FastifyInstance) {
 
     fastify.delete('/finances/categories/:id', async (request: AuthenticatedUserRequest, reply) => {
         return new DeleteCategoryController().handle(request, reply);
+    });
+
+    fastify.put('/finances/categories/:id', async (request: AuthenticatedUserRequest, reply) => {
+        return new UpdateCategoryController().handle(request, reply);
     });
 }

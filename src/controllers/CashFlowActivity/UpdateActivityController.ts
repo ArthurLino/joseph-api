@@ -2,7 +2,7 @@ import { FastifyReply } from "fastify";
 import { UpdateCashFlowMovementService } from "@activityServices/UpdateActivityService";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
-export class UpdateActivitiesController {
+export class UpdateActivityController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
     
         const authorId = request.user.id as string;
