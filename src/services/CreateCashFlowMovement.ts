@@ -4,7 +4,7 @@ import { CreateCashFlowCategoryService } from "./CreateCashFlowCategory";
 
 type CreateCashFlowMovementServiceProps = {
     authorId: CashFlowMovement["authorId"];
-    type: CashFlowMovementType
+    type: string;
     value: number;
     categories: string[];
     notes?: string;
@@ -19,7 +19,7 @@ export class CreateCashFlowMovementService {
         const cashFlowMovement = await prismaClient.cashFlowMovement.create({
             data: {
                 authorId,
-                type,
+                type: type.toUpperCase() as CashFlowMovementType,
                 value,
                 notes,
                 date,

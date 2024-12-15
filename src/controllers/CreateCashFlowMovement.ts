@@ -9,7 +9,7 @@ export class CreateCashFlowMovementController {
         const authorId = request.user.id as CashFlowMovement["authorId"];
 
         const { type, value, categories, notes, date } = request.body as {
-            type: CashFlowMovementType, 
+            type: string, 
             value: number, 
             categories: string[], 
             notes?: string,
