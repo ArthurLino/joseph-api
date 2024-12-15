@@ -25,6 +25,7 @@ export class UpdateCashFlowMovementService {
             notes: notes, 
             date: date 
         } as { [key: string]: any };
+        
         Object.entries(data).forEach(([key, value]: [string, any]) => { if (value === undefined) delete data[key] });
 
         const cashFlowMovementExists = await prismaClient.cashFlowMovement.findFirst({

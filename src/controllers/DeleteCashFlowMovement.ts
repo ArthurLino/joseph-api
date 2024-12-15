@@ -9,7 +9,7 @@ export class DeleteCashFlowMovementController {
 
         const { id } = request.params as { id: string };
     
-        if ( !id || !authorId ) return reply.code(400).send("Invalid params sent.");
+        if ( !id ) return reply.code(400).send("Invalid params sent.");
 
         const deleteCashFlowMovementService = await new DeleteCashFlowMovementService().execute({ authorId, id });
 

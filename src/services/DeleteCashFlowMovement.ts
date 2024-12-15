@@ -4,7 +4,7 @@ import prismaClient from "../prisma";
 export class DeleteCashFlowMovementService {
     async execute({ authorId, id }: { authorId: string; id: string; }) {
 
-        if ( !ObjectId.isValid(id) ) throw new Error("Invalid id.");
+        if ( !ObjectId.isValid(id) || !authorId ) throw new Error('Missing request data.');
         
         try {
             

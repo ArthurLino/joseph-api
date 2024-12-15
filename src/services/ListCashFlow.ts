@@ -11,6 +11,8 @@ type ListCashFlowMovementsQueryProps = {
 
 export class ListCashFlowMovementsService {
     async execute(authorId : string, {type, date, from, to, category}: ListCashFlowMovementsQueryProps) {
+        
+        if ( !authorId ) throw new Error('Missing request data.')
 
         const filters = {} as ListCashFlowMovementsQueryProps
 
