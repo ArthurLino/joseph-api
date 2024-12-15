@@ -15,6 +15,8 @@ export class CreateCashFlowMovementService {
     async execute({authorId, type, value, categories, notes, date}: CreateCashFlowMovementServiceProps) {
 
         if ( !authorId || !value || !type || !categories ) throw new Error('Missing request data.')
+        
+        if ( !['INCOME', 'EXPENSE'].includes(type.toUpperCase()) ) throw new Error('Invalid type.')
 
         const cashFlowMovement = await prismaClient.cashFlowMovement.create({
             data: {
