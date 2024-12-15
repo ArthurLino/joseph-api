@@ -10,7 +10,7 @@ export class DeleteActivityController {
 
         const { id } = request.params as { id: string };
     
-        if ( !id ) return reply.code(400).send("Invalid params sent.");
+        if ( !id ) return reply.send("Invalid params sent.").code(400);
 
         const deleteActivityService = await new DeleteCashFlowActivityService().execute({ authorId, id });
 

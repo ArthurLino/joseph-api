@@ -18,7 +18,7 @@ export class DeleteCashFlowActivityService {
             return deletedActivity;
 
         } catch (error) {
-            throw new Error(`Cannot complete operation.`);
+            throw new Error(`Cannot complete operation.\n ${error}`);
         }
 
     }

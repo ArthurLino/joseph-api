@@ -1,14 +1,11 @@
 import { FastifyReply } from "fastify";
-import { CashFlowActivity } from "@prisma/client";
 import { ListCashFlowActivitiesService } from "@activityServices/ListActivitiesService"
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class ListActivitiesController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
         
-        const authorId = request.user.id as CashFlowActivity["authorID"];
-        
-        const listActivitiesService = new ListCashFlowActivitiesService();
+        const authorId = request.user.id as string;
 
         const query = request.query as { [key: string]: any };
 
@@ -25,6 +22,8 @@ export class ListActivitiesController {
             if ( hasValidKeys.includes(false) ) return reply.code(400).send({ error: "Invalid query parameters." })
 
         }
+        
+        const listActivitiesService = new ListCashFlowActivitiesService();
 
         const activitiesList = await listActivitiesService.execute(authorId, request.query as { 
             type: string;

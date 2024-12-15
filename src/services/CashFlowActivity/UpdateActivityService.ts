@@ -1,11 +1,11 @@
 import prismaClient from "../../prisma";
-import { CashFlowActivity, CashFlowActivityType } from "@prisma/client";
+import { CashFlowActivityType } from "@prisma/client";
 import { ObjectId } from "mongodb";
 
 type UpdateCashFlowMovementServiceProps = {
-    authorId: CashFlowActivity["authorID"];
+    authorId: string;
     id: string;
-    type: CashFlowActivityType;
+    type: string;
     value: number;
     categories: string[];
     notes: string;
@@ -15,12 +15,16 @@ type UpdateCashFlowMovementServiceProps = {
 export class UpdateCashFlowMovementService {
     async execute({ authorId, id, type, value, categories, notes, date}: UpdateCashFlowMovementServiceProps) {
 
-        if ( !authorId || !id ) throw new Error('Missing request data.')
+        if ( !authorId || !id ) throw new Error('Missing request data.');
 
         if ( !ObjectId.isValid(id) ) throw new Error("Invalid id.");
 
+        const formattedType = type.toUpperCase() as CashFlowActivityType;
+        
+        if ( Object.values(CashFlowActivityType).includes(formattedType) ) throw new Error('Invalid type.');
+
         const data = { 
-            type: type, 
+            type: formattedType, 
             value: value, 
             notes: notes, 
             date: date 
@@ -31,7 +35,7 @@ export class UpdateCashFlowMovementService {
         const activityExists = await prismaClient.cashFlowActivity.findFirst({
             where: {
                 id: id, 
-                // authorId: authorId
+                authorID: authorId
             }
         });
 

@@ -1,5 +1,4 @@
 import { FastifyReply } from "fastify";
-import { CashFlowActivityType } from "@prisma/client";
 import { UpdateCashFlowMovementService } from "@activityServices/UpdateActivityService";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
@@ -11,7 +10,7 @@ export class UpdateActivitiesController {
         const { id } = request.params as { id: string };
 
         const { type, value, categories, notes, date } = request.body as {
-            type: CashFlowActivityType, 
+            type: string, 
             value: number, 
             categories: string[], 
             notes: string,
