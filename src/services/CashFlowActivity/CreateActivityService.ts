@@ -17,7 +17,7 @@ export class CreateActivityService {
 
         const formattedType = type.toUpperCase() as CashFlowActivityType;
         
-        if ( Object.values(CashFlowActivityType).includes(formattedType) ) throw new Error('Invalid type.');
+        if ( !Object.values(CashFlowActivityType).includes(formattedType) ) throw new Error('Invalid type.');
 
         const newActivity = await prismaClient.cashFlowActivity.create({
             data: {
@@ -28,7 +28,7 @@ export class CreateActivityService {
                 date,
                 categories: {
                     connectOrCreate: categories.map(category => ({
-                        create: { name: category.toLowerCase(), authorId },
+                        create: { name: category.toLowerCase(), authorID: authorId },
                         where: { name: category.toLowerCase() }
                     }))
                 }
