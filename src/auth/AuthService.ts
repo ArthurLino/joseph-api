@@ -1,5 +1,5 @@
 import prismaClient from "../prisma";
-import * as crypto from 'node:crypto';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 export type AuthServiceProps = {
@@ -14,7 +14,9 @@ export class AuthService {
 
         if (userExists) throw new Error('User already exists.');
 
-        password = await crypto.createHash('sha256').update(password).digest('hex');
+        const saltRounds = process.env.SALT_ROUNDS;
+        if (!saltRounds) throw new Error('Salt is not defined.');
+        password = await bcrypt.hash(password, parseInt(saltRounds));
 
         const user = await prismaClient.user.create({
             data: {
@@ -32,7 +34,7 @@ export class AuthService {
         const user = await prismaClient.user.findUnique({ where: { email: email } })
         if (!user) throw new Error('User not found.')
 
-        const isPasswordValid = crypto.createHash('sha256').update(password).digest('hex') === user.password
+        const isPasswordValid = await bcrypt.compare(password, user.password)
         if (!isPasswordValid) throw new Error('Invalid password.')
 
         if (!process.env.JWT_SECRET) throw new Error('Something went wrong. Try again later.')
