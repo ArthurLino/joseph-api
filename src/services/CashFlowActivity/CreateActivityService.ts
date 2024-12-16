@@ -1,7 +1,7 @@
-import prismaClient from "../../prisma";
+import prismaClient from "@prismaClient";
 import { CashFlowActivityType } from "@prisma/client"
 
-type CreateCashFlowActivityServiceProps = {
+type CreateActivityServiceProps = {
     authorId: string;
     type: string;
     value: number;
@@ -10,8 +10,8 @@ type CreateCashFlowActivityServiceProps = {
     date?: Date;
 }
 
-export class CreateCashFlowActivityService {
-    async execute({authorId, type, value, categories, notes, date}: CreateCashFlowActivityServiceProps) {
+export class CreateActivityService {
+    async execute({authorId, type, value, categories, notes, date}: CreateActivityServiceProps) {
 
         if ( !authorId || !value || !type || !categories ) throw new Error('Missing request data.');
 

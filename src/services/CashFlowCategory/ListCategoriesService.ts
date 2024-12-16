@@ -1,6 +1,6 @@
-import prismaClient from "src/prisma";
+import prismaClient from "@prismaClient";
 
-export class ListCashFlowCategoriesService {
+export class ListCategoriesService {
     async execute({ authorId }: { authorId: string}) {
 
         if ( !authorId ) throw new Error('Missing request data.')

@@ -1,8 +1,8 @@
-import prismaClient from "../../prisma";
+import prismaClient from "@prismaClient";
 import { CashFlowActivityType } from "@prisma/client";
 import { ObjectId } from "mongodb";
 
-type UpdateCashFlowMovementServiceProps = {
+type UpdateActivityServiceProps = {
     authorId: string;
     id: string;
     type: string;
@@ -12,8 +12,8 @@ type UpdateCashFlowMovementServiceProps = {
     date: Date;
 }
 
-export class UpdateCashFlowMovementService {
-    async execute({ authorId, id, type, value, categories, notes, date}: UpdateCashFlowMovementServiceProps) {
+export class UpdateActivityService {
+    async execute({ authorId, id, type, value, categories, notes, date}: UpdateActivityServiceProps) {
 
         if ( !authorId || !id ) throw new Error('Missing request data.');
 

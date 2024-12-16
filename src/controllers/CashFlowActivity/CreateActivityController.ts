@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify";
-import { CreateCashFlowActivityService } from "@activityServices/CreateActivityService";
+import { CreateActivityService } from "@activityServices/index";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class CreateActivityController {
@@ -15,7 +15,7 @@ export class CreateActivityController {
             date?: Date
         };
 
-        const createActivityService = new CreateCashFlowActivityService();
+        const createActivityService = new CreateActivityService();
 
         const transaction = await createActivityService.execute({
             authorId,
