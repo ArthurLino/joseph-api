@@ -21,38 +21,38 @@ model User {
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
   balance            Float              @default(0.0)
-  cashFlow           CashFlowMovement[]
+  cashFlow           CashFlowActivity[]
   cashFlowCategories CashFlowCategory[]
 
   @@map("users")
 }
 
-model CashFlowMovement {
+model CashFlowActivity {
   id          String               @id @default(auto()) @map("_id") @db.ObjectId
-  authorId    String               @db.ObjectId
-  author      User                 @relation(fields: [authorId], references: [id])
+  authorID    String               @db.ObjectId
+  author      User                 @relation(fields: [authorID], references: [id])
   value       Float
-  type        CashFlowMovementType
+  type        CashFlowActivityType
   categoryIDs String[]             @db.ObjectId
   categories  CashFlowCategory[]   @relation(fields: [categoryIDs], references: [id])
   notes       String?
   date        DateTime             @default(now())
 
-  @@map("movements")
+  @@map("cashflow activities")
 }
 
 model CashFlowCategory {
   id          String             @id @default(auto()) @map("_id") @db.ObjectId
   name        String             @unique
-  authorId    String?            @db.ObjectId
-  author      User?              @relation(fields: [authorId], references: [id])
-  movementIDs String[]           @db.ObjectId
-  movements   CashFlowMovement[] @relation(fields: [movementIDs], references: [id])
+  authorID    String?            @db.ObjectId
+  author      User?              @relation(fields: [authorID], references: [id])
+  activityIDs String[]           @db.ObjectId
+  activities   CashFlowActivity[] @relation(fields: [activityIDs], references: [id])
 
   @@map("categories")
 }
 
-enum CashFlowMovementType {
+enum CashFlowActivityType {
   INCOME
   EXPENSE
 }

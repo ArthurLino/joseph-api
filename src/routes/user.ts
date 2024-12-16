@@ -1,27 +1,48 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import { AuthenticatedUserRequest, AuthValidation } from "@auth/AuthValidation";
-import { CreateCashFlowMovementController } from "@controllers/CreateCashFlowMovement";
-import { ListCashFlowMovementsController } from "@controllers/ListCashFlow";
-import { CreateCashFlowCategoryController } from "@controllers/CreateCashFlowCategory";
-import { ListCashFlowCategoriesController } from "@controllers/ListCashFlowCategories";
+import { FastifyInstance } from "fastify";
+import { CreateActivityController } from "@activityControllers/CreateActivityController";
+import { ListActivitiesController } from "@activityControllers/ListActivitiesController";
+import { DeleteActivityController } from "@activityControllers/DeleteActivityController";
+import { UpdateActivityController } from "@activityControllers/UpdateActivityController";
+import { CreateCategoryController } from "@categoryControllers/CreateCategoryController";
+import { ListCategoriesController } from "@categoryControllers/ListCategoriesController";
+import { DeleteCategoryController } from "@categoryControllers/DeleteCategoryController";
+import { UpdateCategoryController } from "@categoryControllers/UpdateCategoryController";
+
+import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 import authHook from "@hooks/authHook";
 
-export async function userRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
+export async function userRoutes(fastify: FastifyInstance) {
     fastify.addHook('preValidation', authHook)
 
     fastify.post('/finances', async (request: AuthenticatedUserRequest, reply) => {
-        return new CreateCashFlowMovementController().handle(request, reply);
+        return new CreateActivityController().handle(request, reply);
     });
 
     fastify.get('/finances', async (request: AuthenticatedUserRequest, reply) => {
-        return new ListCashFlowMovementsController().handle(request, reply)
+        return new ListActivitiesController().handle(request, reply)
+    });
+
+    fastify.delete('/finances/:id', async (request: AuthenticatedUserRequest, reply) => {
+        return new DeleteActivityController().handle(request, reply);
+    });
+
+    fastify.put('/finances/:id', async (request: AuthenticatedUserRequest, reply) => {
+        return new UpdateActivityController().handle(request, reply);
     });
 
     fastify.post('/finances/categories', async (request: AuthenticatedUserRequest, reply) => {
-        return new CreateCashFlowCategoryController().handle(request, reply);
+        return new CreateCategoryController().handle(request, reply);
     });
 
     fastify.get('/finances/categories', async (request: AuthenticatedUserRequest, reply) => {
-        return new ListCashFlowCategoriesController().handle(request, reply);
+        return new ListCategoriesController().handle(request, reply);
+    });
+
+    fastify.delete('/finances/categories/:id', async (request: AuthenticatedUserRequest, reply) => {
+        return new DeleteCategoryController().handle(request, reply);
+    });
+
+    fastify.put('/finances/categories/:id', async (request: AuthenticatedUserRequest, reply) => {
+        return new UpdateCategoryController().handle(request, reply);
     });
 }

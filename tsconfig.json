@@ -30,12 +30,15 @@
     // "moduleResolution": "node10",                     /* Specify how TypeScript looks up a file from a given module specifier. */
     "baseUrl": ".",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      "@services/*": ["./src/services/*"],
-      "@controllers/*": ["./src/controllers/*"],
+      "@activityServices/*": ["./src/services/CashFlowActivity/*"],
+      "@categoryServices/*": ["./src/services/CashFlowCategory/*"],
+      "@activityControllers/*": ["./src/controllers/CashFlowActivity/*"],
+      "@categoryControllers/*": ["./src/controllers/CashFlowCategory/*"],
       "@auth/*": ["./src/auth/*"],
       "@plugins/*": ["./src/plugins/*"],
       "@routes/*": ["./src/routes/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@prismaClient": ["./src/prisma/index.ts"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
