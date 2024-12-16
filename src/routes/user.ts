@@ -2,10 +2,10 @@ import { FastifyInstance } from "fastify";
 import { CreateActivityController, ListActivitiesController, DeleteActivityController, UpdateActivityController } from "@activityControllers/index";
 import { CreateCategoryController, ListCategoriesController, DeleteCategoryController, UpdateCategoryController } from "@categoryControllers/index";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
-import authHook from "@hooks/authHook";
+import useAuthValidation from "@hooks/useAuthValidation";
 
 export async function userRoutes(fastify: FastifyInstance) {
-    fastify.addHook('preValidation', authHook)
+    fastify.addHook('preValidation', useAuthValidation)
 
     fastify.post('/finances', async (request: AuthenticatedUserRequest, reply) => {
         return new CreateActivityController().handle(request, reply);
