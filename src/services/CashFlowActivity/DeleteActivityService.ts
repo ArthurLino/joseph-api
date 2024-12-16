@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
-import prismaClient from "../../prisma";
+import prismaClient from "@prismaClient";
 
-export class DeleteCashFlowActivityService {
+export class DeleteActivityService {
     async execute({ authorId, id }: { authorId: string; id: string; }) {
 
         if ( !ObjectId.isValid(id) || !authorId ) throw new Error('Missing request data.');

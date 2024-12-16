@@ -1,5 +1,5 @@
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
-import { UpdateCashFlowCategoryService } from "@categoryServices/UpdateCategoryService";
+import { UpdateCategoryService } from "@categoryServices/UpdateCategoryService";
 import { FastifyReply } from "fastify";
 
 export class UpdateCategoryController {
@@ -11,7 +11,7 @@ export class UpdateCategoryController {
 
         const { name } = request.body as { name: string };
 
-        const updatedCategory = await new UpdateCashFlowCategoryService().execute({ authorId, id, name });
+        const updatedCategory = await new UpdateCategoryService().execute({ authorId, id, name });
         return reply.code(200).send(updatedCategory);
     }
 }

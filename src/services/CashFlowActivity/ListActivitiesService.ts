@@ -1,7 +1,7 @@
 import { CashFlowActivityType } from "@prisma/client";
-import prismaClient from "../../prisma";
+import prismaClient from "@prismaClient";
 
-type ListCashFlowActivitiesQueryProps = {
+type ListActivitiesQueryProps = {
     type: string;
     date: Date;
     from: Date;
@@ -9,12 +9,12 @@ type ListCashFlowActivitiesQueryProps = {
     category: string;
 }
 
-export class ListCashFlowActivitiesService {
-    async execute(authorId : string, {type, date, from, to, category}: ListCashFlowActivitiesQueryProps) {
+export class ListActivitiesService {
+    async execute(authorId : string, {type, date, from, to, category}: ListActivitiesQueryProps) {
         
         if ( !authorId ) throw new Error('Missing request data.')
 
-        const filters = {} as ListCashFlowActivitiesQueryProps
+        const filters = {} as ListActivitiesQueryProps
 
         if ( type && (type.toUpperCase() == "INCOME" || type.toUpperCase() == "EXPENSE") ) filters["type"] = type.toUpperCase()
 

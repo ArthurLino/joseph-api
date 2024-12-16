@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify";
-import { ListCashFlowActivitiesService } from "@activityServices/ListActivitiesService"
+import { ListActivitiesService } from "@activityServices/index"
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class ListActivitiesController {
@@ -23,7 +23,7 @@ export class ListActivitiesController {
 
         }
         
-        const listActivitiesService = new ListCashFlowActivitiesService();
+        const listActivitiesService = new ListActivitiesService();
 
         const activitiesList = await listActivitiesService.execute(authorId, request.query as { 
             type: string;
