@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify"
 import { AuthValidation } from "@auth/AuthValidation"
 
-const authHook = async (request: FastifyRequest, reply: FastifyReply) => {
+const useAuthValidation = async (request: FastifyRequest, reply: FastifyReply) => {
     await AuthValidation(request, reply)
 }
 
-export default authHook
+export default useAuthValidation
