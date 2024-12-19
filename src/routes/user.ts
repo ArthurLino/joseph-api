@@ -3,8 +3,6 @@ import { CreateActivityController, ListActivitiesController, DeleteActivityContr
 import { CreateCategoryController, ListCategoriesController, DeleteCategoryController, UpdateCategoryController } from "@categoryControllers/index";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 import useAuthValidation from "@hooks/useAuthValidation";
-import prismaClient from "@prismaClient";
-import { UpdateUserBalanceService } from "src/services/User/UpdateUserBalance";
 import useUpdateUserBalance from "@hooks/useUpdateUserBalance";
 
 export async function userRoutes(fastify: FastifyInstance) {
