@@ -38,6 +38,7 @@
       "@plugins/*": ["./src/plugins/*"],
       "@routes/*": ["./src/routes/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"],
       "@prismaClient": ["./src/prisma/index.ts"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */

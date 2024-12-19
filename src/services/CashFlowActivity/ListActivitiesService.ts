@@ -1,6 +1,6 @@
 import { CashFlowActivityType } from "@prisma/client";
 import prismaClient from "@prismaClient";
-import isDateValid from "src/utils/isDateValid";
+import isDateValid from "@utils/isDateValid";
 
 type ListActivitiesQueryProps = {
     type: string;

@@ -18,9 +18,9 @@ const start = async () => {
         max: 100,
         timeWindow: '1 minute'
     });
-    await server.register(publicRoutes, { prefix: '/api' });
+    await server.register(publicRoutes, { prefix: '/api/v1' });
     await server.register(userRoutes, {
-        prefix: '/api/user',
+        prefix: '/api/v1/user',
     })
 
     try {
