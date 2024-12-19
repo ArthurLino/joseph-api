@@ -1,5 +1,6 @@
 import { CashFlowActivityType } from "@prisma/client";
 import prismaClient from "@prismaClient";
+import isDateValid from "src/utils/isDateValid";
 
 type ListActivitiesQueryProps = {
     type: string;
@@ -18,11 +19,11 @@ export class ListActivitiesService {
 
         if ( type && (type.toUpperCase() == "INCOME" || type.toUpperCase() == "EXPENSE") ) filters["type"] = type.toUpperCase()
 
-        if ( date && !isNaN(new Date(date).getTime())) filters["date"] = new Date(date)
+        if ( isDateValid(date) ) filters["date"] = new Date(date)
 
-        if ( from && !isNaN(new Date(from).getTime())) filters["from"] = new Date(from)
+        if ( isDateValid(from) ) filters["from"] = new Date(from)
             
-        if ( to && !isNaN(new Date(to).getTime())) filters["to"] = new Date(to)
+        if ( isDateValid(to) ) filters["to"] = new Date(to)
 
         if ( category ) filters["category"] = category
         
