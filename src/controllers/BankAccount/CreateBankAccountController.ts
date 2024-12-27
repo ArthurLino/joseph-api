@@ -1,6 +1,6 @@
 import { FastifyReply } from "fastify";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
-import { CreateBankAccountService } from "@bankAccountServices/index";
+import { CreateBankAccountService } from "@bankAccountServices";
 
 export class CreateBankAccountController {
     async handle(request: AuthenticatedUserRequest, reply: FastifyReply) {
@@ -11,8 +11,6 @@ export class CreateBankAccountController {
             name: string;
             balance: number;
         };
-
-        console.log(request.body);
 
         const createBankAccountService = new CreateBankAccountService();
 

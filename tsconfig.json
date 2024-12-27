@@ -32,7 +32,7 @@
     "paths": {
       "@activityServices/*": ["./src/services/CashFlowActivity/*"],
       "@categoryServices/*": ["./src/services/CashFlowCategory/*"],
-      "@bankAccountServices/*": ["./src/services/BankAccount/*"],
+      "@bankAccountServices": ["./src/services/BankAccount/index"],
       "@activityControllers/*": ["./src/controllers/CashFlowActivity/*"],
       "@categoryControllers/*": ["./src/controllers/CashFlowCategory/*"],
       "@bankAccountControllers/*": ["./src/controllers/BankAccount/*"],

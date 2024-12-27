@@ -10,9 +10,9 @@ export class DeleteCategoryController {
 
         if ( !id ) return reply.send("Invalid params sent.").code(400);
 
-        const deleteCategoryService = await new DeleteCategoryService().execute({ authorId, id });
+        const deletedCategory = await new DeleteCategoryService().execute({ authorId, id });
 
-        reply.send({message: 'Object deleted.', data: deleteCategoryService}).code(200);
+        reply.send({message: 'Object deleted.', data: deletedCategory}).code(200);
 
     }
 }
