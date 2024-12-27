@@ -3,8 +3,6 @@ import prismaClient from "@prismaClient";
 export class ListBankAccountsService {
     async execute({ ownerId }: { ownerId: string}) {
 
-        console.log(ownerId);
-
         if ( !ownerId ) throw new Error('Missing request data.')
 
         const bankAccounts = await prismaClient.bankAccount.findMany({ where: { ownerID: ownerId } });

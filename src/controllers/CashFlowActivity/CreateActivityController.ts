@@ -7,12 +7,13 @@ export class CreateActivityController {
         
         const authorId = request.user.id as string;
 
-        const { type, value, categories, notes, date } = request.body as {
+        const { type, value, categories, notes, date, bankAccountId } = request.body as {
             type: string, 
             value: number, 
             categories: string[], 
             notes?: string,
-            date?: Date
+            date?: Date,
+            bankAccountId?: string
         };
 
         const createActivityService = new CreateActivityService();
@@ -23,7 +24,8 @@ export class CreateActivityController {
             value,
             categories,
             notes,
-            date
+            date,
+            bankAccountId
         });
 
         reply.send(activity).code(201);

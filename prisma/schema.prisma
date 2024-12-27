@@ -34,8 +34,8 @@ model BankAccount {
   owner              User               @relation(fields: [ownerID], references: [id])
   name               String
   balance            Float
-  CashFlowActivities CashFlowActivity[]
-  CreditCard         CreditCard?
+  cashFlowActivities CashFlowActivity[]
+  creditCard         CreditCard?
 
   @@map("bank accounts")
 }
@@ -48,10 +48,10 @@ model CreditCard {
   limit            Float
   billClosingDay   Int
   billDueDay       Int
-  Brand            String
-  BankAccountID    String             @unique @db.ObjectId
-  BankAccount      BankAccount        @relation(fields: [BankAccountID], references: [id])
-  CashFlowActivity CashFlowActivity[]
+  brand            String
+  bankAccountID    String             @unique @db.ObjectId
+  bankAccount      BankAccount        @relation(fields: [bankAccountID], references: [id])
+  cashFlowActivity CashFlowActivity[]
 
   @@map("credit cards")
 }
@@ -65,11 +65,11 @@ model CashFlowActivity {
   // if type === EXPENSE
   paymentMethod String?
   // if paymentMethod === CREDIT_CARD
-  CreditCardID  String?              @db.ObjectId
-  CreditCard    CreditCard?          @relation(fields: [CreditCardID], references: [id])
+  creditCardID  String?              @db.ObjectId
+  creditCard    CreditCard?          @relation(fields: [creditCardID], references: [id])
   // ---------------------------
-  BankAccountID String?              @db.ObjectId
-  BankAccount   BankAccount?         @relation(fields: [BankAccountID], references: [id])
+  bankAccountID String?              @db.ObjectId
+  bankAccount   BankAccount?         @relation(fields: [bankAccountID], references: [id])
   categoryIDs   String[]             @db.ObjectId
   categories    CashFlowCategory[]   @relation(fields: [categoryIDs], references: [id])
   notes         String?
