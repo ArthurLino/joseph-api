@@ -92,6 +92,7 @@ model CashFlowCategory {
 enum CashFlowActivityType {
   INCOME
   EXPENSE
+  INVESTMENT
 }
 
 enum PaymentMethods {
