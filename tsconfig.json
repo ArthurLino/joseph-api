@@ -32,8 +32,10 @@
     "paths": {
       "@activityServices/*": ["./src/services/CashFlowActivity/*"],
       "@categoryServices/*": ["./src/services/CashFlowCategory/*"],
+      "@bankAccountServices/*": ["./src/services/BankAccount/*"],
       "@activityControllers/*": ["./src/controllers/CashFlowActivity/*"],
       "@categoryControllers/*": ["./src/controllers/CashFlowCategory/*"],
+      "@bankAccountControllers/*": ["./src/controllers/BankAccount/*"],
       "@auth/*": ["./src/auth/*"],
       "@plugins/*": ["./src/plugins/*"],
       "@routes/*": ["./src/routes/*"],
