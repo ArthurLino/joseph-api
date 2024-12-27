@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify"
-import { DeleteActivityService } from "@activityServices/index";
+import { DeleteActivityService } from "@activityServices";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 ;
 

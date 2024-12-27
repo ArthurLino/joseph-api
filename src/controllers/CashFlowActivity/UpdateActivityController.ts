@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify";
-import { UpdateActivityService } from "@activityServices/index";
+import { UpdateActivityService } from "@activityServices";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class UpdateActivityController {

@@ -1,5 +1,5 @@
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
-import { DeleteCategoryService } from "@categoryServices/DeleteCategoryService";
+import { DeleteCategoryService } from "@categoryServices";
 import { FastifyReply } from "fastify";
 
 export class DeleteCategoryController {

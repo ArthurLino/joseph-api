@@ -11,8 +11,8 @@ export class UpdateBankAccountService {
 
         try {
 
-            const updatedAccount = await prismaClient.bankAccount.update({ where: { id }, data: { name, balance } });
-            return updatedAccount;
+            const updatedBankAccount = await prismaClient.bankAccount.update({ where: { id }, data: { name, balance } });
+            return updatedBankAccount;
 
         }
         catch (error) {
