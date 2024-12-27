@@ -17,7 +17,7 @@ export class CreateActivityController {
 
         const createActivityService = new CreateActivityService();
 
-        const transaction = await createActivityService.execute({
+        const activity = await createActivityService.execute({
             authorId,
             type,
             value,
@@ -26,7 +26,7 @@ export class CreateActivityController {
             date
         });
 
-        reply.send(transaction).code(201);
+        reply.send(activity).code(201);
     
     }
 }

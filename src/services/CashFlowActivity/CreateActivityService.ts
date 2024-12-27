@@ -1,5 +1,6 @@
 import prismaClient from "@prismaClient";
 import { CashFlowActivityType } from "@prisma/client"
+import validateActivityType from "@utils/validateActivityType";
 
 type CreateActivityServiceProps = {
     authorId: string;
@@ -14,15 +15,13 @@ export class CreateActivityService {
     async execute({authorId, type, value, categories, notes, date}: CreateActivityServiceProps) {
 
         if ( !authorId || !value || !type || !categories ) throw new Error('Missing request data.');
-
-        const formattedType = type.toUpperCase() as CashFlowActivityType;
         
-        if ( !Object.values(CashFlowActivityType).includes(formattedType) ) throw new Error('Invalid type.');
+        if ( !validateActivityType(type) ) throw new Error('Invalid type.');
 
         const newActivity = await prismaClient.cashFlowActivity.create({
             data: {
                 authorID: authorId,
-                type: formattedType,
+                type: validateActivityType(type) as CashFlowActivityType,
                 value,
                 notes,
                 date,

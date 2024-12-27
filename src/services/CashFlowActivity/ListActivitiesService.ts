@@ -1,6 +1,7 @@
 import { CashFlowActivityType } from "@prisma/client";
 import prismaClient from "@prismaClient";
 import isDateValid from "@utils/isDateValid";
+import validateActivityType from "@utils/validateActivityType";
 
 type ListActivitiesQueryProps = {
     type: string;
@@ -17,7 +18,7 @@ export class ListActivitiesService {
 
         const filters = {} as ListActivitiesQueryProps
 
-        if ( type && (type.toUpperCase() == "INCOME" || type.toUpperCase() == "EXPENSE") ) filters["type"] = type.toUpperCase()
+        if ( type && validateActivityType(type) ) filters["type"] = validateActivityType(type) as string;
 
         if ( isDateValid(date) ) filters["date"] = new Date(date)
 

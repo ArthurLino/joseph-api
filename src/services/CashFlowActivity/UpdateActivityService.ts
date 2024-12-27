@@ -1,5 +1,5 @@
+import validateActivityType from "@utils/validateActivityType";
 import prismaClient from "@prismaClient";
-import { CashFlowActivityType } from "@prisma/client";
 import { ObjectId } from "mongodb";
 
 type UpdateActivityServiceProps = {
@@ -18,13 +18,11 @@ export class UpdateActivityService {
         if ( !authorId || !id ) throw new Error('Missing request data.');
 
         if ( !ObjectId.isValid(id) ) throw new Error("Invalid id.");
-
-        const formattedType = type.toUpperCase() as CashFlowActivityType;
         
-        if ( Object.values(CashFlowActivityType).includes(formattedType) ) throw new Error('Invalid type.');
+        if ( !validateActivityType(type) ) throw new Error('Invalid type.');
 
         const data = { 
-            type: formattedType, 
+            type: validateActivityType(type), 
             value: value, 
             notes: notes, 
             date: date 
