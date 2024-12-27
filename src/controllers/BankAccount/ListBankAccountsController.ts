@@ -8,7 +8,9 @@ export class ListBankAccountsController {
 
         const listBankAccountsService = new ListBankAccountsService();
 
-        const bankAccounts = await listBankAccountsService.execute(ownerId);
+        console.log(ownerId)
+
+        const bankAccounts = await listBankAccountsService.execute({ ownerId });
         
         reply.send(bankAccounts).code(200);
     }
