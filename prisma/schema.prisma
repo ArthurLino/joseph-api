@@ -20,23 +20,60 @@ model User {
   password           String             @map("password")
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
-  balance            Float              @default(0.0)
   cashFlow           CashFlowActivity[]
   cashFlowCategories CashFlowCategory[]
+  BankAccounts       BankAccount[]
+  CreditCards        CreditCard[]
 
   @@map("users")
 }
 
+model BankAccount {
+  id                 String             @id @default(auto()) @map("_id") @db.ObjectId
+  ownerID            String             @db.ObjectId
+  owner              User               @relation(fields: [ownerID], references: [id])
+  name               String
+  balance            Float
+  CashFlowActivities CashFlowActivity[]
+  CreditCard         CreditCard?
+
+  @@map("bank accounts")
+}
+
+model CreditCard {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  ownerID          String             @db.ObjectId
+  owner            User               @relation(fields: [ownerID], references: [id])
+  name             String
+  limit            Float
+  billClosingDay   Int
+  billDueDay       Int
+  Brand            String
+  BankAccountID    String             @unique @db.ObjectId
+  BankAccount      BankAccount        @relation(fields: [BankAccountID], references: [id])
+  CashFlowActivity CashFlowActivity[]
+
+  @@map("credit cards")
+}
+
 model CashFlowActivity {
-  id          String               @id @default(auto()) @map("_id") @db.ObjectId
-  authorID    String               @db.ObjectId
-  author      User                 @relation(fields: [authorID], references: [id])
-  value       Float
-  type        CashFlowActivityType
-  categoryIDs String[]             @db.ObjectId
-  categories  CashFlowCategory[]   @relation(fields: [categoryIDs], references: [id])
-  notes       String?
-  date        DateTime             @default(now())
+  id            String               @id @default(auto()) @map("_id") @db.ObjectId
+  authorID      String               @db.ObjectId
+  author        User                 @relation(fields: [authorID], references: [id])
+  value         Float
+  type          CashFlowActivityType
+  // if type === EXPENSE
+  paymentMethod String?
+  // if paymentMethod === CREDIT_CARD
+  CreditCardID  String?              @db.ObjectId
+  CreditCard    CreditCard?          @relation(fields: [CreditCardID], references: [id])
+  // ---------------------------
+  BankAccountID String?              @db.ObjectId
+  BankAccount   BankAccount?         @relation(fields: [BankAccountID], references: [id])
+  categoryIDs   String[]             @db.ObjectId
+  categories    CashFlowCategory[]   @relation(fields: [categoryIDs], references: [id])
+  notes         String?
+  date          DateTime             @default(now())
 
   @@map("cashflow activities")
 }
@@ -47,7 +84,7 @@ model CashFlowCategory {
   authorID    String?            @db.ObjectId
   author      User?              @relation(fields: [authorID], references: [id])
   activityIDs String[]           @db.ObjectId
-  activities   CashFlowActivity[] @relation(fields: [activityIDs], references: [id])
+  activities  CashFlowActivity[] @relation(fields: [activityIDs], references: [id])
 
   @@map("categories")
 }
@@ -55,4 +92,12 @@ model CashFlowCategory {
 enum CashFlowActivityType {
   INCOME
   EXPENSE
+}
+
+enum PaymentMethods {
+  CREDIT_CARD
+  DEBIT_CARD
+  CASH
+  PIX
+  TRANSFER
 }
