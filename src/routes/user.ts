@@ -3,7 +3,6 @@ import { CreateActivityController, ListActivitiesController, DeleteActivityContr
 import { CreateCategoryController, ListCategoriesController, DeleteCategoryController, UpdateCategoryController } from "@categoryControllers/index";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 import useAuthValidation from "@hooks/useAuthValidation";
-import useUpdateUserBalance from "@hooks/useUpdateUserBalance";
 
 export async function userRoutes(fastify: FastifyInstance) {
     fastify.addHook('preValidation', useAuthValidation)
@@ -14,10 +13,6 @@ export async function userRoutes(fastify: FastifyInstance) {
 
     fastify.get('/finances/categories', async (request: AuthenticatedUserRequest, reply) => {
         return new ListCategoriesController().handle(request, reply);
-    });
-
-    fastify.addHook('onResponse', async (request: AuthenticatedUserRequest, reply) => {
-        await useUpdateUserBalance(request, reply);
     });
 
     fastify.post('/finances', async (request: AuthenticatedUserRequest, reply) => {
