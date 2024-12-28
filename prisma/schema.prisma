@@ -32,11 +32,11 @@ model BankAccount {
   id                 String             @id @default(auto()) @map("_id") @db.ObjectId
   ownerID            String             @db.ObjectId
   owner              User               @relation(fields: [ownerID], references: [id])
-  name               String
+  name               String             @unique
   balance            Float
   cashFlowActivities CashFlowActivity[]
   creditCard         CreditCard?
-  deletable          Boolean            @default(true)
+  deletable          Boolean            @default(true) @map("_deletable")
 
   @@map("bank accounts")
 }
@@ -69,8 +69,8 @@ model CashFlowActivity {
   creditCardID  String?              @db.ObjectId
   creditCard    CreditCard?          @relation(fields: [creditCardID], references: [id])
   // ---------------------------
-  bankAccountID String?              @db.ObjectId
-  bankAccount   BankAccount?         @relation(fields: [bankAccountID], references: [id])
+  bankAccountID String               @db.ObjectId
+  bankAccount   BankAccount          @relation(fields: [bankAccountID], references: [id])
   categoryIDs   String[]             @db.ObjectId
   categories    CashFlowCategory[]   @relation(fields: [categoryIDs], references: [id])
   notes         String?

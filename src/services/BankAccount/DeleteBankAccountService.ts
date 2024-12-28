@@ -8,7 +8,7 @@ export class DeleteBankAccountService {
 
         const accountExists = await prismaClient.bankAccount.findFirst({ where: { id, ownerID: ownerId } });
 
-        if (!accountExists) throw new Error('Account not found.');
+        if (!accountExists || !accountExists.deletable) throw new Error('Account undeletable or not found.');
 
         try {
         
