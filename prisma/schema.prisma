@@ -36,6 +36,7 @@ model BankAccount {
   balance            Float
   cashFlowActivities CashFlowActivity[]
   creditCard         CreditCard?
+  deletable          Boolean            @default(true)
 
   @@map("bank accounts")
 }
