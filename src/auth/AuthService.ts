@@ -22,7 +22,14 @@ export class AuthService {
             data: {
                 name,
                 email,
-                password
+                password,
+                BankAccounts: {
+                    create: {
+                        name: 'Wallet',
+                        balance: 0,
+                        deletable: false
+                    }
+                }
             }
         })
 

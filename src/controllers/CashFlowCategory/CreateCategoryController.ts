@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify";
-import { CreateCategoryService } from "@categoryServices/CreateCategoryService";
+import { CreateCategoryService } from "@categoryServices";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class CreateCategoryController {

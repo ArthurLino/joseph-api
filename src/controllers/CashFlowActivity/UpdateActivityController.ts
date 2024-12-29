@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify";
-import { UpdateActivityService } from "@activityServices/index";
+import { UpdateActivityService } from "@activityServices";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class UpdateActivityController {
@@ -19,8 +19,8 @@ export class UpdateActivityController {
     
         if ( !id ) return reply.code(400).send("Invalid params sent.");
 
-        const updateActivitiesService = await new UpdateActivityService().execute({ authorId, id, type, value, categories, notes, date });
+        const updatedActivity = await new UpdateActivityService().execute({ authorId, id, type, value, categories, notes, date });
 
-        reply.send({message: 'Movement update was successful.', data: updateActivitiesService}).code(202);
+        reply.send({message: 'Movement update was successful.', data: updatedActivity}).code(202);
     }
 }

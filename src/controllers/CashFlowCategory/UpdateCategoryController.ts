@@ -1,5 +1,5 @@
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
-import { UpdateCategoryService } from "@categoryServices/UpdateCategoryService";
+import { UpdateCategoryService } from "@categoryServices";
 import { FastifyReply } from "fastify";
 
 export class UpdateCategoryController {

@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify"
-import { DeleteActivityService } from "@activityServices/index";
+import { DeleteActivityService } from "@activityServices";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 ;
 
@@ -12,8 +12,8 @@ export class DeleteActivityController {
     
         if ( !id ) return reply.send("Invalid params sent.").code(400);
 
-        const deleteActivityService = await new DeleteActivityService().execute({ authorId, id });
+        const deletedActivity = await new DeleteActivityService().execute({ authorId, id });
 
-        reply.send({message: 'Object deleted.', data: deleteActivityService}).code(200);
+        reply.send({message: 'Object deleted.', data: deletedActivity}).code(200);
     }
 }
