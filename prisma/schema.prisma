@@ -64,7 +64,7 @@ model CashFlowActivity {
   value         Float
   type          CashFlowActivityType
   // if type === EXPENSE
-  paymentMethod String?
+  paymentMethod PaymentMethod?
   // if paymentMethod === CREDIT_CARD
   creditCardID  String?              @db.ObjectId
   creditCard    CreditCard?          @relation(fields: [creditCardID], references: [id])
@@ -96,7 +96,7 @@ enum CashFlowActivityType {
   INVESTMENT
 }
 
-enum PaymentMethods {
+enum PaymentMethod {
   CREDIT_CARD
   DEBIT_CARD
   CASH

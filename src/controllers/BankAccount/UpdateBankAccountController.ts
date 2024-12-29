@@ -15,6 +15,6 @@ export class UpdateBankAccountController {
     
             const updatedBankAccount = await new UpdateBankAccountService().execute({ ownerId, id, name, balance });
     
-            reply.send({message: 'Movement update was successful.', data: updatedBankAccount}).code(202);
+            reply.send({message: 'Bank Account update was successful.', data: updatedBankAccount}).code(202);
         }
 }

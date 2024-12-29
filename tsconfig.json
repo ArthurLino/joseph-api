@@ -32,9 +32,11 @@
     "paths": {
       "@activityServices": ["./src/services/CashFlowActivity/index"],
       "@categoryServices": ["./src/services/CashFlowCategory/index"],
+      "@creditCardServices": ["./src/services/CreditCard/index"],
       "@bankAccountServices": ["./src/services/BankAccount/index"],
       "@activityControllers": ["./src/controllers/CashFlowActivity/index"],
       "@categoryControllers": ["./src/controllers/CashFlowCategory/index"],
+      "@creditCardControllers": ["./src/controllers/CreditCard/index"],
       "@bankAccountControllers": ["./src/controllers/BankAccount/index"],
       "@auth/*": ["./src/auth/*"],
       "@plugins/*": ["./src/plugins/*"],

@@ -2,6 +2,7 @@ import useAuthValidation from "@hooks/useAuthValidation";
 import { FastifyInstance } from "fastify";
 import { CreateActivityController, ListActivitiesController, DeleteActivityController, UpdateActivityController } from "@activityControllers";
 import { CreateCategoryController, ListCategoriesController, DeleteCategoryController, UpdateCategoryController } from "@categoryControllers";
+import { CreateCreditCardController, DeleteCreditCardController, ListCreditCardsController, UpdateCreditCardController } from "@creditCardControllers";
 import { CreateBankAccountController, DeleteBankAccountController, ListBankAccountsController, UpdateBankAccountController } from "@bankAccountControllers";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
@@ -20,6 +21,10 @@ export async function userRoutes(fastify: FastifyInstance) {
         return new ListBankAccountsController().handle(request, reply);
     });
 
+    fastify.get('/finances/cards', async (request: AuthenticatedUserRequest, reply) => {
+        return new ListCreditCardsController().handle(request, reply);
+    });
+
     fastify.post('/finances', async (request: AuthenticatedUserRequest, reply) => {
         return new CreateActivityController().handle(request, reply);
     });
@@ -30,6 +35,10 @@ export async function userRoutes(fastify: FastifyInstance) {
 
     fastify.post('/finances/accounts', async (request: AuthenticatedUserRequest, reply) => {
         return new CreateBankAccountController().handle(request, reply);
+    });
+
+    fastify.post('/finances/cards', async (request: AuthenticatedUserRequest, reply) => {
+        return new CreateCreditCardController().handle(request, reply);
     });
 
     fastify.put('/finances/:id', async (request: AuthenticatedUserRequest, reply) => {
@@ -44,6 +53,10 @@ export async function userRoutes(fastify: FastifyInstance) {
         return new UpdateBankAccountController().handle(request, reply);
     });
 
+    fastify.put('/finances/cards/:id', async (request: AuthenticatedUserRequest, reply) => {
+        return new UpdateCreditCardController().handle(request, reply);
+    });
+
     fastify.delete('/finances/:id', async (request: AuthenticatedUserRequest, reply) => {
         return new DeleteActivityController().handle(request, reply);
     });
@@ -54,5 +67,9 @@ export async function userRoutes(fastify: FastifyInstance) {
 
     fastify.delete('/finances/accounts/:id', async (request: AuthenticatedUserRequest, reply) => {
         return new DeleteBankAccountController().handle(request, reply);
+    });
+
+    fastify.delete('/finances/cards/:id', async (request: AuthenticatedUserRequest, reply) => {
+        return new DeleteCreditCardController().handle(request, reply);
     });
 }

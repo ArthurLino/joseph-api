@@ -7,8 +7,10 @@ export class CreateActivityController {
         
         const authorId = request.user.id as string;
 
-        const { type, value, categories, notes, date, bankAccountId } = request.body as {
+        const { type, paymentMethod, creditCardId, value, categories, notes, date, bankAccountId } = request.body as {
             type: string, 
+            paymentMethod?: string,
+            creditCardId?: string,
             value: number, 
             categories: string[], 
             notes?: string,
@@ -21,6 +23,8 @@ export class CreateActivityController {
         const activity = await createActivityService.execute({
             authorId,
             type,
+            paymentMethod,
+            creditCardId,
             value,
             categories,
             notes,

@@ -1,13 +1,13 @@
 import prismaClient from "@prismaClient";
-import { CashFlowActivityType } from "@prisma/client"
+import { CashFlowActivityType, PaymentMethod } from "@prisma/client"
 import validateActivityType from "@utils/validateActivityType";
-import { connect } from "http2";
-import { ObjectId } from "mongodb";
-import { create } from "domain";
+import validatePaymentMethod from "@utils/validatePaymentMethod";
 
 type CreateActivityServiceProps = {
     authorId: string;
     type: string;
+    paymentMethod?: string;
+    creditCardId?: string;
     value: number;
     categories: string[];
     notes?: string;
@@ -16,12 +16,18 @@ type CreateActivityServiceProps = {
 }
 
 export class CreateActivityService {
-    async execute({authorId, type, value, categories, notes, date, bankAccountId}: CreateActivityServiceProps) {
+    async execute({authorId, type, paymentMethod, creditCardId, value, categories, notes, date, bankAccountId}: CreateActivityServiceProps) {
 
         if ( !authorId || !value || !type || !categories ) throw new Error('Missing request data.');
         
         if ( !validateActivityType(type) ) throw new Error('Invalid type.');
+
+        if ( validateActivityType(type) === 'EXPENSE' && !validatePaymentMethod(paymentMethod) ) throw new Error('Missing (valid) expense payment method.');
         
+        if ( validateActivityType(type) === 'INCOME' && paymentMethod ) throw new Error('Income activities should not have payment methods.');
+
+        if ( validatePaymentMethod(paymentMethod) == "CREDIT_CARD" && !creditCardId ) throw new Error('Missing credit card.');
+
         const defaultAccount = await prismaClient.bankAccount.findFirst({ where: { ownerID: authorId, deletable: false } }) as { id: string };
         const isAccountValid = await prismaClient.bankAccount.findFirst({ where: { id: bankAccountId, ownerID: authorId } });
 
@@ -29,6 +35,7 @@ export class CreateActivityService {
             data: {
                 authorID: authorId,
                 type: validateActivityType(type) as CashFlowActivityType,
+                paymentMethod: validatePaymentMethod(paymentMethod) as PaymentMethod, 
                 value,
                 notes,
                 date,
