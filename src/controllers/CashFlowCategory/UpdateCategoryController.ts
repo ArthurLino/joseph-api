@@ -8,10 +8,15 @@ export class UpdateCategoryController {
         const authorId = request.user.id as string;
 
         const { id } = request.params as { id: string };
-
         const { name } = request.body as { name: string };
 
-        const updatedCategory = await new UpdateCategoryService().execute({ authorId, id, name });
-        return reply.code(200).send(updatedCategory);
+        const updateCategoryService = new UpdateCategoryService()
+        const updatedCategory = await updateCategoryService.execute({ 
+            authorId, 
+            id, 
+            name 
+        });
+
+        return reply.send(updatedCategory).code(200);
     }
 }

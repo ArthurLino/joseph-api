@@ -1,10 +1,11 @@
 import prismaClient from "@prismaClient";
 import validateCategoryName from "@utils/validateCategoryName";
+import { ObjectId } from "mongodb";
 
 export class CreateCategoryService {
     async execute({ name, authorId }: {name: string, authorId: string}) {
         
-        if ( !authorId || !validateCategoryName(name) ) throw new Error('Missing request data.')
+        if ( !ObjectId.isValid(authorId) || !validateCategoryName(name) ) throw new Error('Missing request data.')
 
         const formattedName = validateCategoryName(name) as string;
 
