@@ -19,7 +19,6 @@ export class CreateActivityController {
         };
 
         const createActivityService = new CreateActivityService();
-
         const activity = await createActivityService.execute({
             authorId,
             type,

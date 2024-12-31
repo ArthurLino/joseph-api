@@ -6,10 +6,27 @@ import { CreateCreditCardController, DeleteCreditCardController, ListCreditCards
 import { CreateBankAccountController, DeleteBankAccountController, ListBankAccountsController, UpdateBankAccountController } from "@bankAccountControllers";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
+const queryActivitiesSchema = {
+    querystring: {
+        type: 'object',
+        properties: {
+            type: { type: 'string' },
+            date: { type: 'string', },
+            from: { type: 'string', },
+            to: { type: 'string', },
+            category: { type: 'string' }
+        },
+        additionalProperties: false
+    }
+}
+
 export async function userRoutes(fastify: FastifyInstance) {
     fastify.addHook('preValidation', useAuthValidation)
 
-    fastify.get('/finances', async (request: AuthenticatedUserRequest, reply) => {
+    fastify.get('/finances', {
+        schema: queryActivitiesSchema,
+
+    }, async (request: AuthenticatedUserRequest, reply) => {
         return new ListActivitiesController().handle(request, reply)
     });
 

@@ -8,7 +8,6 @@ export class UpdateActivityController {
         const authorId = request.user.id as string;
 
         const { id } = request.params as { id: string };
-
         const { type, value, categories, notes, date } = request.body as {
             type: string, 
             value: number, 
@@ -16,11 +15,10 @@ export class UpdateActivityController {
             notes: string,
             date: Date
         };
-    
-        if ( !id ) return reply.code(400).send("Invalid params sent.");
 
-        const updatedActivity = await new UpdateActivityService().execute({ authorId, id, type, value, categories, notes, date });
+        const updateActivityService = new UpdateActivityService();
+        const updatedActivity = await updateActivityService.execute({ authorId, id, type, value, categories, notes, date });
 
-        reply.send({message: 'Movement update was successful.', data: updatedActivity}).code(202);
+        reply.send({message: 'Update was successful.', data: updatedActivity}).code(200);
     }
 }

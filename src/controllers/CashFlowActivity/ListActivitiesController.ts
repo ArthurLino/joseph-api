@@ -7,32 +7,34 @@ export class ListActivitiesController {
         
         const authorId = request.user.id as string;
 
-        const query = request.query as { [key: string]: any };
+        const query = request.query as { [key: string]: string | Date | undefined };
 
-        if ( query && Object.keys(query).length > 0 ) {
+        // if ( query && Object.keys(query).length > 0 ) {
 
-            const hasValidKeys = Object.keys(query).map( key => { 
+        //     const hasValidKeys = Object.keys(query).map( key => { 
                 
-                if ( !query[key] ) return false
+        //         if ( !query[key] ) return false
 
-                return ["type", "date", "from", "to", "category"].includes(key) ? true : false 
+        //         return ["type", "date", "from", "to", "category"].includes(key) ? true : false 
 
-            })
+        //     })
 
-            if ( hasValidKeys.includes(false) ) return reply.code(400).send({ error: "Invalid query parameters." })
+        //     if ( hasValidKeys.includes(false) ) return reply.code(400).send({ error: "Invalid query parameters." })
 
-        }
+        // }
         
         const listActivitiesService = new ListActivitiesService();
-
-        const activitiesList = await listActivitiesService.execute(authorId, request.query as { 
-            type: string;
-            date: Date;
-            from: Date;
-            to: Date;
-            category: string;
+        const activitiesList = await listActivitiesService.execute({
+            authorId, 
+            query: {
+                type: query.type as string,
+                date: query.date as Date,
+                from: query.from as Date,
+                to: query.to as Date,
+                category: query.category as string
+            }
         });        
 
-        reply.code(200).send(activitiesList) 
+        reply.send(activitiesList).code(200);
     }
 }
