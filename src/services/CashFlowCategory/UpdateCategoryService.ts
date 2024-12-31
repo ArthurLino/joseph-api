@@ -2,8 +2,14 @@ import prismaClient from "@prismaClient";
 import validateCategoryName from "@utils/validateCategoryName";
 import { ObjectId } from "mongodb";
 
+type UpdateCategoryServiceProps = {
+    authorId: string;
+    id: string;
+    name: string;
+}
+
 export class UpdateCategoryService {
-    async execute({ authorId, id, name }: { authorId: string, id: string, name: string }) {
+    async execute({ authorId, id, name }: UpdateCategoryServiceProps) {
 
         if (!ObjectId.isValid(authorId) || !ObjectId.isValid(id) || validateCategoryName(name)) throw new Error('Missing request data.');
 

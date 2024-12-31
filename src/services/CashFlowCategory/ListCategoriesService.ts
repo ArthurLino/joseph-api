@@ -1,8 +1,10 @@
 import prismaClient from "@prismaClient";
 import { ObjectId } from "mongodb";
 
+type ListCategoriesServiceProps = { authorId: string; }
+
 export class ListCategoriesService {
-    async execute({ authorId }: { authorId: string}) {
+    async execute({ authorId }: ListCategoriesServiceProps) {
 
         if ( !ObjectId.isValid(authorId) ) throw new Error('Missing request data.')
 

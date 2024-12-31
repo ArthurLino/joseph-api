@@ -1,8 +1,13 @@
 import prismaClient from "@prismaClient";
 import { ObjectId } from "mongodb";
 
+type DeleteCategoryServiceProps = { 
+    authorId: string;
+    id: string;
+}
+
 export class DeleteCategoryService {
-    async execute({ authorId, id }: { authorId: string, id: string }) {
+    async execute({ authorId, id }: DeleteCategoryServiceProps) {
 
         if ( !ObjectId.isValid(authorId) || !ObjectId.isValid(id) ) throw new Error('Missing request data.');
 
