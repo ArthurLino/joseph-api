@@ -19,15 +19,15 @@ export class UpdateActivityService {
 
         if ( !ObjectId.isValid(authorId) || !ObjectId.isValid(id) ) throw new Error('Missing request data.');
         
-        if ( !validateActivityType(type) ) throw new Error('Invalid type.');
+        // if ( !validateActivityType(type) ) throw new Error('Invalid type.');
 
-        if ( Number.isNaN(value) ) throw new Error('Invalid value.');
+        // if ( Number.isNaN(value) ) throw new Error('Invalid value.');
 
-        if ( !isDate(date) ) throw new Error('Invalid date.');
+        // if ( !isDate(date) ) throw new Error('Invalid date.');
 
-        categories && categories.forEach(category => {
-            if ( !validateNames(category) ) throw new Error('Invalid category name.');
-        });
+        // categories && categories.forEach(category => {
+        //     if ( !validateNames(category) ) throw new Error('Invalid category name.');
+        // });
 
         const data = { 
             type: validateActivityType(type), 

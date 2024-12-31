@@ -27,6 +27,6 @@ export class CreateCreditCardController {
             bankAccountId: bankAccountId,
         });
         
-        return reply.code(201).send({"message": "New credit card created.", creditCard});
+        return reply.send({"message": "New credit card created.", creditCard}).code(201);
     }
 }

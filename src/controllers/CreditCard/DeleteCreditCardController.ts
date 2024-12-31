@@ -8,8 +8,9 @@ export class DeleteCreditCardController {
 
         const { id } = request.params as { id: string };
 
-        const deletedCreditCard = await new DeleteCreditCardService().execute({ownerId, creditCardId: id});
+        const deleteCreditCardService = new DeleteCreditCardService();
+        const deletedCreditCard = await deleteCreditCardService.execute({ownerId, creditCardId: id});
 
-        return reply.send(deletedCreditCard).code(204);
+        return reply.send(deletedCreditCard).code(200);
     }
 }

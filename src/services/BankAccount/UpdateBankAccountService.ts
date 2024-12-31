@@ -18,7 +18,7 @@ export class UpdateBankAccountService {
 
         if (!accountExists) throw new Error('Account not found.');
 
-        if ( !validateNames(name) || Number.isNaN(balance) ) throw new Error('Invalid data sent. Please, try again.');
+        // if ( !validateNames(name) || Number.isNaN(balance) ) throw new Error('Invalid data sent. Please, try again.');
 
         try {
 

@@ -1,4 +1,5 @@
 import prismaClient from "@prismaClient";
+import { ObjectId } from "mongodb";
 
 type UpdateCreditCardServiceProps = {
     ownerId: string,
@@ -13,8 +14,8 @@ type UpdateCreditCardServiceProps = {
 export class UpdateCreditCardService {
     async execute({ownerId, creditCardId, name, limit, billClosingDay, billDueDay, brand}: UpdateCreditCardServiceProps) {
         
-        if ( !ownerId || !creditCardId ) throw new Error('Missing request data.');
-        
+        if ( !ObjectId.isValid(ownerId) || !ObjectId.isValid(creditCardId) ) throw new Error('Missing request data.');
+
         const updatedCreditCard = await prismaClient.creditCard.update({
             where: {
                 ownerID: ownerId,

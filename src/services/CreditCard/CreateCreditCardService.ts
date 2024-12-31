@@ -1,4 +1,6 @@
 import prismaClient from "@prismaClient";
+import validateNames from "@utils/validateNames";
+import { ObjectId } from "mongodb";
 
 type CreateCreditCardServiceProps = { 
     ownerId: string,
@@ -13,7 +15,13 @@ type CreateCreditCardServiceProps = {
 export class CreateCreditCardService {
     async execute({ ownerId, name, limit, billClosingDay, billDueDay, brand, bankAccountId }: CreateCreditCardServiceProps) {
 
-        if ( !ownerId || !name || !limit || !billClosingDay || !billDueDay || !brand || !bankAccountId ) throw new Error('Missing request data.');
+        if ( !ObjectId.isValid(ownerId) || !ObjectId.isValid(bankAccountId) ) throw new Error('Missing request data.');
+
+        if ( validateNames(name) || validateNames(brand) ) throw new Error('Invalid name or brand.');
+
+        if ( Number.isNaN(limit) || limit < 0 ) throw new Error('Invalid card limit.');
+
+        if ( billClosingDay < 1 || billClosingDay > 31 || billDueDay < 1 || billDueDay > 31 ) throw new Error('Invalid billing day.');
 
         const newCreditCard = await prismaClient.creditCard.create({
             data: {

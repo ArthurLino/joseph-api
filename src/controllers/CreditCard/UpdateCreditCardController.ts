@@ -8,7 +8,6 @@ export class UpdateCreditCardController {
         const ownerId = request.user.id as string;
 
         const { id } = request.params as { id: string };
-
         const { name, limit, billClosingDay, billDueDay, brand } = request.body as { 
             name: string, 
             limit: number, 
