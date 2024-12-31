@@ -37,7 +37,7 @@ export class ListActivitiesService {
 
             if ( value === undefined ) return; // query parameters not provided
 
-            if ( !filter[key](value) ) throw new Error(`Invalid query parameter: ${key}`); // query parameter where provided but did not pass validation
+            if ( !filter[key](value) ) throw new Error(`Invalid query ${key} parameter provided`); // query parameter where provided but did not pass validation
 
             filters[key] = filter[key](value); // query parameter provided and passed validation
 
