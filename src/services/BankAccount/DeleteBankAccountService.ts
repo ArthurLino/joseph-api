@@ -1,10 +1,15 @@
 import prismaClient from "@prismaClient";
 import { ObjectId } from "mongodb";
 
-export class DeleteBankAccountService {
-    async execute({ ownerId, id }: { ownerId: string, id: string }) {
+type DeleteBankAccountServiceProps = { 
+    ownerId: string; 
+    id: string; 
+};
 
-        if ( !ObjectId.isValid(id) || !ownerId ) throw new Error('Missing request data.');
+export class DeleteBankAccountService {
+    async execute({ ownerId, id }: DeleteBankAccountServiceProps) {
+
+        if ( !ObjectId.isValid(id) || !ObjectId.isValid(ownerId) ) throw new Error('Missing request data.');
 
         const accountExists = await prismaClient.bankAccount.findFirst({ where: { id, ownerID: ownerId } });
 

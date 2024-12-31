@@ -13,13 +13,12 @@ export class CreateBankAccountController {
         };
 
         const createBankAccountService = new CreateBankAccountService();
-
-        const bankAccount = await createBankAccountService.execute({
+        const newBankAccount = await createBankAccountService.execute({
             ownerId,
             name,
             balance,
         });
 
-        reply.send(bankAccount).code(201);
+        reply.send(newBankAccount).code(201);
     }
 }

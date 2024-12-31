@@ -1,5 +1,5 @@
 import prismaClient from "@prismaClient";
-import validateCategoryName from "@utils/validateCategoryName";
+import validateNames from "@utils/validateNames";
 import { ObjectId } from "mongodb";
 
 type CreateCategoryServiceProps = {
@@ -10,9 +10,9 @@ type CreateCategoryServiceProps = {
 export class CreateCategoryService {
     async execute({ name, authorId }: CreateCategoryServiceProps) {
         
-        if ( !ObjectId.isValid(authorId) || !validateCategoryName(name) ) throw new Error('Missing request data.')
+        if ( !ObjectId.isValid(authorId) || !validateNames(name) ) throw new Error('Missing request data.')
 
-        const formattedName = validateCategoryName(name) as string;
+        const formattedName = validateNames(name) as string;
 
         const categoryExists = await prismaClient.cashFlowCategory.findFirst({
             where: {

@@ -8,13 +8,15 @@ export class UpdateBankAccountController {
             const ownerId = request.user.id as string;
     
             const { id } = request.params as { id: string };
-    
             const { name, balance } = request.body as { name: string, balance: number};
-        
-            if ( !id ) return reply.code(400).send("Invalid params sent.");
     
-            const updatedBankAccount = await new UpdateBankAccountService().execute({ ownerId, id, name, balance });
+            const updatedBankAccount = await new UpdateBankAccountService().execute({ 
+                ownerId, 
+                id, 
+                name, 
+                balance 
+            });
     
-            reply.send({message: 'Bank Account update was successful.', data: updatedBankAccount}).code(202);
+            reply.send({message: 'Bank Account was updated.', data: updatedBankAccount}).code(200);
         }
 }

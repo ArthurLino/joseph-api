@@ -1,7 +1,7 @@
 import prismaClient from "@prismaClient";
 import { ObjectId } from "mongodb";
 
-type ListCategoriesServiceProps = { authorId: string; }
+type ListCategoriesServiceProps = { authorId: string; };
 
 export class ListCategoriesService {
     async execute({ authorId }: ListCategoriesServiceProps) {
