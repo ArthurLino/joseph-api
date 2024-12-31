@@ -8,7 +8,7 @@ export class ListCreditCardsController {
         const ownerId = request.user.id as string;
 
         const listCreditCardsService = new ListCreditCardsService();
-        const creditCards = await listCreditCardsService.execute(ownerId);
+        const creditCards = await listCreditCardsService.execute({ownerId});
 
         return reply.send(creditCards).code(200);
     }
