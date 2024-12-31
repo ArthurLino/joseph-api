@@ -7,7 +7,7 @@ export class ListActivitiesController {
         
         const authorId = request.user.id as string;
 
-        const query = request.query as { [key: string]: string | Date | undefined };
+        const query = request.query as { [key: string]: string | string[] | Date | undefined };
 
         // if ( query && Object.keys(query).length > 0 ) {
 
@@ -31,7 +31,7 @@ export class ListActivitiesController {
                 date: query.date as Date,
                 from: query.from as Date,
                 to: query.to as Date,
-                category: query.category as string
+                categories: query.category as string[]
             }
         });        
 
