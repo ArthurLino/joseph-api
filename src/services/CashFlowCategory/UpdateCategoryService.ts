@@ -1,9 +1,11 @@
 import prismaClient from "@prismaClient";
+import validateCategoryName from "@utils/validateCategoryName";
+import { ObjectId } from "mongodb";
 
 export class UpdateCategoryService {
     async execute({ authorId, id, name }: { authorId: string, id: string, name: string }) {
 
-        if (!authorId || !id || !name) throw new Error('Missing request data.');
+        if (!ObjectId.isValid(authorId) || !ObjectId.isValid(id) || validateCategoryName(name)) throw new Error('Missing request data.');
 
         const categoryExists = await prismaClient.cashFlowCategory.findFirst({ where: { id, authorID: authorId } });
 

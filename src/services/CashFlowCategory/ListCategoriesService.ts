@@ -1,14 +1,15 @@
 import prismaClient from "@prismaClient";
+import { ObjectId } from "mongodb";
 
 export class ListCategoriesService {
     async execute({ authorId }: { authorId: string}) {
 
-        if ( !authorId ) throw new Error('Missing request data.')
+        if ( !ObjectId.isValid(authorId) ) throw new Error('Missing request data.')
 
-        const cashFlowCategories = await prismaClient.cashFlowCategory.findMany({ where: { authorID: authorId } });
+        const categories = await prismaClient.cashFlowCategory.findMany({ where: { authorID: authorId } });
 
-        if (!cashFlowCategories) throw new Error('No categories found for this user.');
+        if (!categories) throw new Error('No categories found for this user. Try creating a category first.');
 
-        return cashFlowCategories;
+        return categories;
     }
 }

@@ -1,10 +1,10 @@
-import { ObjectId } from "mongodb";
 import prismaClient from "@prismaClient";
+import { ObjectId } from "mongodb";
 
 export class DeleteCategoryService {
     async execute({ authorId, id }: { authorId: string, id: string }) {
 
-        if ( !ObjectId.isValid(id) || !authorId ) throw new Error('Missing request data.');
+        if ( !ObjectId.isValid(authorId) || !ObjectId.isValid(id) ) throw new Error('Missing request data.');
 
         const categoryExists = await prismaClient.cashFlowCategory.findFirst({ where: { id, authorID: authorId } });
 
