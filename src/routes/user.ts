@@ -11,22 +11,26 @@ const queryActivitiesSchema = {
         type: 'object',
         properties: {
             type: { type: 'string' },
-            date: { type: 'string', },
-            from: { type: 'string', },
-            to: { type: 'string', },
-            category: { type: 'string' }
+            date: { type: 'string' },
+            from: { type: 'string' },
+            to: { type: 'string' },
+            categories: { 
+                oneOf: [
+                    { type: 'array', items: { type: 'string' } },
+                    { type: 'string' }
+                ]
+            },
+            skip: { type: 'number' },
+            take: { type: 'number' },
         },
-        additionalProperties: false
+        additionalProperties: true
     }
 }
 
 export async function userRoutes(fastify: FastifyInstance) {
     fastify.addHook('preValidation', useAuthValidation)
 
-    fastify.get('/finances', {
-        schema: queryActivitiesSchema,
-
-    }, async (request: AuthenticatedUserRequest, reply) => {
+    fastify.get('/finances', { schema: queryActivitiesSchema }, async (request: AuthenticatedUserRequest, reply) => {
         return new ListActivitiesController().handle(request, reply)
     });
 

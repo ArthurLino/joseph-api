@@ -10,9 +10,9 @@ import { configDotenv } from 'dotenv';
 configDotenv();
 
 const ajv = new Ajv({
-    coerceTypes: false,
+    coerceTypes: true,
     useDefaults: false,
-    removeAdditional: true,
+    removeAdditional: false,
     uriResolver: fastUri,
     addUsedSchema: false,
     allErrors: false,
