@@ -1,6 +1,6 @@
-import { CreateActivityController } from "@activityControllers/CreateActivityController";
-import { ListActivitiesController } from "@activityControllers/ListActivitiesController";
-import { DeleteActivityController } from "@activityControllers/DeleteActivityController";
-import { UpdateActivityController } from "@activityControllers/UpdateActivityController";
+import { CreateActivityController } from "./CreateActivityController";
+import { ListActivitiesController } from "./ListActivitiesController";
+import { DeleteActivityController } from "./DeleteActivityController";
+import { UpdateActivityController } from "./UpdateActivityController";
 
 export { CreateActivityController, ListActivitiesController, DeleteActivityController, UpdateActivityController };

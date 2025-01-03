@@ -1,23 +1,23 @@
 import prismaClient from "@prismaClient";
 import { ObjectId } from "mongodb";
 
-type ListCategoriesServiceProps = { 
-    authorId: string;
-    query: ListCategoriesQueryProps;
+type ListCreditCardsServiceProps = {
+    ownerId: string;
+    query: ListCreditCardsQueryProps;
 };
 
-type ListCategoriesQueryProps = {
+type ListCreditCardsQueryProps = {
     skip?: number;
     take?: number;
 }
 
-export type ListCategoriesQueryValues = ListCategoriesQueryProps[keyof ListCategoriesQueryProps];
+export type ListCreditCardsQueryValues = ListCreditCardsQueryProps[keyof ListCreditCardsQueryProps];
 
-export class ListCategoriesService {
-    async execute({ authorId, query }: ListCategoriesServiceProps) {
-
-        if ( !ObjectId.isValid(authorId) ) throw new Error('Missing request data.')
-            
+export class ListCreditCardsService {
+    async execute({ownerId, query}: ListCreditCardsServiceProps) {
+        
+        if ( !ObjectId.isValid(ownerId) ) throw new Error('Missing request data.');
+                    
         const filters: { [key: string]: any } = {};
 
         const filter: { [key: string]: (value: any) => any } = {
@@ -25,7 +25,7 @@ export class ListCategoriesService {
             "take": (take: number) => Number.isInteger(take) && take,
         };
 
-        Object.entries(query).forEach(([key, value]: [string, ListCategoriesQueryValues]) => {
+        Object.entries(query).forEach(([key, value]: [string, ListCreditCardsQueryValues]) => {
 
             if (value === undefined) return; // query parameters not provided
 
@@ -34,15 +34,13 @@ export class ListCategoriesService {
             filters[key] = filter[key](value); // query parameter provided and passed validation
 
         });
-
-        const categories = await prismaClient.cashFlowCategory.findMany({ 
-            where: { authorID: authorId }, 
+        
+        const creditCards = await prismaClient.creditCard.findMany({
+            where: { ownerID: ownerId },
             skip: filters.skip,
             take: filters.take
         });
-
-        if (!categories) throw new Error('No categories found for this user. Try creating a category first.');
-
-        return categories;
+        
+        return creditCards;
     }
 }

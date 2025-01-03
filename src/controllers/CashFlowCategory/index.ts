@@ -1,6 +1,6 @@
-import { CreateCategoryController } from "@categoryControllers/CreateCategoryController";
-import { ListCategoriesController } from "@categoryControllers/ListCategoriesController";
-import { DeleteCategoryController } from "@categoryControllers/DeleteCategoryController";
-import { UpdateCategoryController } from "@categoryControllers/UpdateCategoryController";
+import { CreateCategoryController } from "./CreateCategoryController";
+import { ListCategoriesController } from "./ListCategoriesController";
+import { DeleteCategoryController } from "./DeleteCategoryController";
+import { UpdateCategoryController } from "./UpdateCategoryController";
 
 export { CreateCategoryController, ListCategoriesController, DeleteCategoryController, UpdateCategoryController };

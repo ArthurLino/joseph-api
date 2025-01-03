@@ -1,5 +1,5 @@
 import { FastifyReply } from "fastify";
-import { CreateActivityService } from "@activityServices/index";
+import { CreateActivityService } from "@activityServices";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 
 export class CreateActivityController {
@@ -7,26 +7,31 @@ export class CreateActivityController {
         
         const authorId = request.user.id as string;
 
-        const { type, value, categories, notes, date } = request.body as {
+        const { type, paymentMethod, creditCardId, value, categories, notes, date, bankAccountId } = request.body as {
             type: string, 
+            paymentMethod?: string,
+            creditCardId?: string,
             value: number, 
             categories: string[], 
             notes?: string,
-            date?: Date
+            date?: Date,
+            bankAccountId?: string
         };
 
         const createActivityService = new CreateActivityService();
-
-        const transaction = await createActivityService.execute({
+        const activity = await createActivityService.execute({
             authorId,
             type,
+            paymentMethod,
+            creditCardId,
             value,
             categories,
             notes,
-            date
+            date,
+            bankAccountId
         });
 
-        reply.send(transaction).code(201);
+        reply.send(activity).code(201);
     
     }
 }

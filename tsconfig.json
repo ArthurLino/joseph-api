@@ -30,14 +30,19 @@
     // "moduleResolution": "node10",                     /* Specify how TypeScript looks up a file from a given module specifier. */
     "baseUrl": ".",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      "@activityServices/*": ["./src/services/CashFlowActivity/*"],
-      "@categoryServices/*": ["./src/services/CashFlowCategory/*"],
-      "@activityControllers/*": ["./src/controllers/CashFlowActivity/*"],
-      "@categoryControllers/*": ["./src/controllers/CashFlowCategory/*"],
+      "@activityServices": ["./src/services/CashFlowActivity/index"],
+      "@categoryServices": ["./src/services/CashFlowCategory/index"],
+      "@creditCardServices": ["./src/services/CreditCard/index"],
+      "@bankAccountServices": ["./src/services/BankAccount/index"],
+      "@activityControllers": ["./src/controllers/CashFlowActivity/index"],
+      "@categoryControllers": ["./src/controllers/CashFlowCategory/index"],
+      "@creditCardControllers": ["./src/controllers/CreditCard/index"],
+      "@bankAccountControllers": ["./src/controllers/BankAccount/index"],
       "@auth/*": ["./src/auth/*"],
       "@plugins/*": ["./src/plugins/*"],
       "@routes/*": ["./src/routes/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"],
       "@prismaClient": ["./src/prisma/index.ts"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */

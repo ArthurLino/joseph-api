@@ -1,23 +1,23 @@
 import prismaClient from "@prismaClient";
 import { ObjectId } from "mongodb";
 
-type ListCategoriesServiceProps = { 
-    authorId: string;
-    query: ListCategoriesQueryProps;
+type ListBankAccountsServiceProps = { 
+    ownerId: string; 
+    query: ListBankAccountsQueryProps;
 };
 
-type ListCategoriesQueryProps = {
+type ListBankAccountsQueryProps = {
     skip?: number;
     take?: number;
 }
 
-export type ListCategoriesQueryValues = ListCategoriesQueryProps[keyof ListCategoriesQueryProps];
+export type ListBankAccountsQueryValues = ListBankAccountsQueryProps[keyof ListBankAccountsQueryProps];
 
-export class ListCategoriesService {
-    async execute({ authorId, query }: ListCategoriesServiceProps) {
+export class ListBankAccountsService {
+    async execute({ ownerId, query }: ListBankAccountsServiceProps) {
 
-        if ( !ObjectId.isValid(authorId) ) throw new Error('Missing request data.')
-            
+        if ( !ObjectId.isValid(ownerId) ) throw new Error('Missing request data.')
+
         const filters: { [key: string]: any } = {};
 
         const filter: { [key: string]: (value: any) => any } = {
@@ -25,7 +25,7 @@ export class ListCategoriesService {
             "take": (take: number) => Number.isInteger(take) && take,
         };
 
-        Object.entries(query).forEach(([key, value]: [string, ListCategoriesQueryValues]) => {
+        Object.entries(query).forEach(([key, value]: [string, ListBankAccountsQueryValues]) => {
 
             if (value === undefined) return; // query parameters not provided
 
@@ -35,14 +35,12 @@ export class ListCategoriesService {
 
         });
 
-        const categories = await prismaClient.cashFlowCategory.findMany({ 
-            where: { authorID: authorId }, 
+        const bankAccounts = await prismaClient.bankAccount.findMany({ 
+            where: { ownerID: ownerId },
             skip: filters.skip,
             take: filters.take
         });
 
-        if (!categories) throw new Error('No categories found for this user. Try creating a category first.');
-
-        return categories;
+        return bankAccounts;
     }
-}
+};

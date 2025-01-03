@@ -1,6 +1,6 @@
-import { ListActivitiesService } from "@activityServices/ListActivitiesService";
-import { CreateActivityService } from "@activityServices/CreateActivityService";
-import { DeleteActivityService } from "@activityServices/DeleteActivityService";
-import { UpdateActivityService } from "@activityServices/UpdateActivityService";
+import { ListActivitiesService } from "./ListActivitiesService";
+import { CreateActivityService } from "./CreateActivityService";
+import { DeleteActivityService } from "./DeleteActivityService";
+import { UpdateActivityService } from "./UpdateActivityService";
 
 export { ListActivitiesService, CreateActivityService, DeleteActivityService, UpdateActivityService };
