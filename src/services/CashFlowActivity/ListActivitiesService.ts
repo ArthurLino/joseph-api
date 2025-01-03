@@ -82,13 +82,6 @@ export class ListActivitiesService {
             },
             skip: filters.skip,
             take: filters.take,
-            include: {
-                categories: { 
-                    select: {
-                        name: true
-                    }
-                }
-            }
         });
             
         return cashFlowActivitiesList;

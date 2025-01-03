@@ -17,7 +17,9 @@ export class CreateCreditCardService {
 
         if ( !ObjectId.isValid(ownerId) || !ObjectId.isValid(bankAccountId) ) throw new Error('Missing request data.');
 
-        if ( validateNames(name) || validateNames(brand) ) throw new Error('Invalid name or brand.');
+        console.log("condition:", (validateNames(name) && validateNames(brand)));
+
+        if ( !validateNames(name) || !validateNames(brand) ) throw new Error('Invalid name or brand.');
 
         if ( Number.isNaN(limit) || limit < 0 ) throw new Error('Invalid card limit.');
 
