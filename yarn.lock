@@ -417,12 +417,12 @@
   dependencies:
     "@types/node" "*"
 
-"@types/dotenv@^6.1.1":
-  version "6.1.1"
-  resolved "https://registry.npmjs.org/@types/dotenv/-/dotenv-6.1.1.tgz"
-  integrity sha512-ftQl3DtBvqHl9L16tpqqzA4YzCSXZfi7g8cQceTz5rOlYtk/IZbFjAv3mLOQlNIgOaylCQWQoBdDQHPgEBJPHg==
+"@types/dotenv@^8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-8.2.3.tgz#c97b3c5b2e97ff3873793a000999e86cd66ff354"
+  integrity sha512-g2FXjlDX/cYuc5CiQvyU/6kkbP1JtmGzh0obW50zD7OKeILVL0NSpPWLXVfqoAGQjom2/SLLx9zHq0KXvD6mbw==
   dependencies:
-    "@types/node" "*"
+    dotenv "*"
 
 "@types/express-serve-static-core@^4.17.33":
   version "4.19.6"
@@ -971,7 +971,7 @@ diff@^4.0.1:
   resolved "https://registry.npmjs.org/diff/-/diff-4.0.2.tgz"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
 
-dotenv@^16.4.7:
+dotenv@*, dotenv@^16.4.7:
   version "16.4.7"
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.4.7.tgz"
   integrity sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==
