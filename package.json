@@ -27,7 +27,7 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^6.1.1",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "prisma": "^6.1.0"
   },
   "scripts": {
