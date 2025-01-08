@@ -45,15 +45,15 @@ export class AuthService {
         if (!isPasswordValid) throw new Error('Invalid password.')
 
         if (!process.env.JWT_SECRET) throw new Error('Something went wrong. Try again later.')
-        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1d' })
+        const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
         return {token, user}
     }
-
-    verifyToken(token: string) {
+    
+    verifyToken(token: string): {id: string, email: string, name: string} {
         const secret = process.env.JWT_SECRET
         if (!secret) throw new Error('Something went wrong. Try again later.')
-        const user = jwt.verify(token, secret) as {id: string, email: string};
+        const user = jwt.verify(token, secret) as {id: string, email: string, name: string};
         return user
     }
 }

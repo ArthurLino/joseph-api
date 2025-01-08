@@ -1,17 +1,32 @@
 import useAuthValidation from "@hooks/useAuthValidation";
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, FastifyReply } from "fastify";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
 import { CreateActivityController, ListActivitiesController, DeleteActivityController, UpdateActivityController } from "@activityControllers";
 import { CreateCategoryController, ListCategoriesController, DeleteCategoryController, UpdateCategoryController } from "@categoryControllers";
 import { CreateCreditCardController, DeleteCreditCardController, ListCreditCardsController, UpdateCreditCardController } from "@creditCardControllers";
 import { CreateBankAccountController, DeleteBankAccountController, ListBankAccountsController, UpdateBankAccountController } from "@bankAccountControllers";
 import { CreateActivitySchema, DeleteActivitySchema, ListActivitiesSchema, UpdateActivitySchema } from "src/schemas/Activity";
-import { ListBankAccountsSchema, CreateBankAccountSchema, UpdateBankAccountSchema, DeleteBankAccountSchema } from "src/schemas/BankAccount";
+import { ListBankAccountsSchema, CreateBankAccountSchema, UpdateBankAccountSchema, DeleteBankAccountSchema, ListBankAccountSchema } from "src/schemas/BankAccount";
 import { CreateCategorySchema, DeleteCategorySchema, ListCategoriesSchema, UpdateCategorySchema } from "src/schemas/Category";
 import { CreateCreditCardSchema, DeleteCreditCardSchema, UpdateCreditCardSchema, ListCreditCardsSchema } from "src/schemas/CreditCard";
+import { AuthController } from "@auth/AuthController";
 
 export async function userRoutes(fastify: FastifyInstance) {
     fastify.addHook('preValidation', useAuthValidation)
+
+    fastify.get('/me', async (request: AuthenticatedUserRequest, reply) => {
+        return reply.send({
+            user: {
+                id: request.user.id,
+                name: request.user.name,
+                email: request.user.email
+            }
+        });
+    });
+    
+    fastify.post('/signout', async (request: AuthenticatedUserRequest, reply: FastifyReply) => {
+        return new AuthController().handleLogout(request, reply);
+    });
 
     // GET
 
@@ -24,6 +39,10 @@ export async function userRoutes(fastify: FastifyInstance) {
     });
 
     fastify.get('/finances/accounts', { schema: ListBankAccountsSchema }, async (request: AuthenticatedUserRequest, reply) => {
+        return new ListBankAccountsController().handle(request, reply);
+    });
+
+    fastify.get('/finances/accounts/:id', { schema: ListBankAccountSchema }, async (request: AuthenticatedUserRequest, reply) => {
         return new ListBankAccountsController().handle(request, reply);
     });
 

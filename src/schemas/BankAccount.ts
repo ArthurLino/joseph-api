@@ -29,6 +29,17 @@ const UpdateBankAccountSchema = {
     }
 };
 
+const ListBankAccountSchema = {
+    params: {
+        type: 'object',
+        required: ['id'],
+        properties: {
+            id: { type: 'string' }
+        },
+        additionalProperties: false,
+    }
+};
+
 const ListBankAccountsSchema = {
     querystring: {
         type: 'object',
@@ -51,4 +62,4 @@ const DeleteBankAccountSchema = {
     }
 };
 
-export { CreateBankAccountSchema, UpdateBankAccountSchema, ListBankAccountsSchema, DeleteBankAccountSchema };
+export { CreateBankAccountSchema, UpdateBankAccountSchema, ListBankAccountsSchema, ListBankAccountSchema, DeleteBankAccountSchema };

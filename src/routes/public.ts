@@ -6,11 +6,11 @@ export async function publicRoutes(fastify: FastifyInstance) {
         return { message: 'Hello World!' };
     });
 
-    fastify.post('/register', async (request: FastifyRequest, reply: FastifyReply) => {
+    fastify.post('/auth/register', async (request: FastifyRequest, reply: FastifyReply) => {
         return new AuthController().handleSignUp(request, reply);
     });
 
-    fastify.post('/login', async (request: FastifyRequest, reply: FastifyReply) => {
+    fastify.post('/auth/login', async (request: FastifyRequest, reply: FastifyReply) => {
         return new AuthController().handleLogin(request, reply);
     });
 }

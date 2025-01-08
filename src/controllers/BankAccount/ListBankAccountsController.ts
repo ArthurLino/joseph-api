@@ -8,9 +8,12 @@ export class ListBankAccountsController {
         
         const ownerId = request.user.id;
         const query = request.query as { [key: string]: ListBankAccountsQueryValues }; 
+        const { id } = request.params as { id: string };
+
+        console.log(id)
 
         const listBankAccountsService = new ListBankAccountsService();
-        const bankAccounts = await listBankAccountsService.execute({ ownerId, query });
+        const bankAccounts = await listBankAccountsService.execute({ ownerId, query, params: { id } });
         
         reply.send(bankAccounts).code(200);
     }

@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 type ListBankAccountsServiceProps = { 
     ownerId: string; 
     query: ListBankAccountsQueryProps;
+    params: ListBankAccountParams;
 };
 
 type ListBankAccountsQueryProps = {
@@ -11,10 +12,14 @@ type ListBankAccountsQueryProps = {
     take?: number;
 }
 
+type ListBankAccountParams = {
+    id: string;
+}
+
 export type ListBankAccountsQueryValues = ListBankAccountsQueryProps[keyof ListBankAccountsQueryProps];
 
 export class ListBankAccountsService {
-    async execute({ ownerId, query }: ListBankAccountsServiceProps) {
+    async execute({ ownerId, query, params }: ListBankAccountsServiceProps) {
 
         if ( !ObjectId.isValid(ownerId) ) throw new Error('Missing request data.')
 
@@ -35,8 +40,13 @@ export class ListBankAccountsService {
 
         });
 
+        const accountId = ObjectId.isValid(params.id) && params.id;
+
         const bankAccounts = await prismaClient.bankAccount.findMany({ 
-            where: { ownerID: ownerId },
+            where: { 
+                ownerID: ownerId,
+                ...(accountId ? { id: accountId } : {})
+            },
             skip: filters.skip,
             take: filters.take
         });
