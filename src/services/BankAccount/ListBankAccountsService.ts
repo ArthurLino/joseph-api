@@ -16,6 +16,8 @@ type ListBankAccountParams = {
     id: string;
 }
 
+export type ListBankAccountsQueryValues = ListBankAccountsQueryProps[keyof ListBankAccountsQueryProps];
+
 export class ListBankAccountsService {
     async execute({ ownerId, query, params }: ListBankAccountsServiceProps) {
 

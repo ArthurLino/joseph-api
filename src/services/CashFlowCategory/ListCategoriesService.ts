@@ -4,20 +4,32 @@ import { ObjectId } from "mongodb";
 type ListCategoriesServiceProps = { 
     authorId: string;
     query: ListCategoriesQueryProps;
+    params: ListCategoryParams;
 };
 
 type ListCategoriesQueryProps = {
     skip?: number;
     take?: number;
+}
+
+type ListCategoryParams = {
+    id: string;
 };
 
-export class ListCategoriesService {
-    async execute({ authorId, query }: ListCategoriesServiceProps) {
+export type ListCategoriesQueryValues = ListCategoriesQueryProps[keyof ListCategoriesQueryProps];
 
-        if ( !ObjectId.isValid(authorId) ) throw new Error('Missing request data.')
+export class ListCategoriesService {
+    async execute({ authorId, query, params }: ListCategoriesServiceProps) {
+
+        if ( !ObjectId.isValid(authorId) ) throw new Error('Missing request data.');
+            
+        const accountId = ObjectId.isValid(params.id) && params.id;
 
         const categories = await prismaClient.cashFlowCategory.findMany({ 
-            where: { authorID: authorId }, 
+            where: { 
+                authorID: authorId,
+                ...(accountId ? { id: accountId } : {})
+            }, 
             skip: query.skip,
             take: query.take
         });

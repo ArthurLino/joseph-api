@@ -8,6 +8,7 @@ import validateNames from "src/utils/validateNames";
 type ListActivitiesServiceProps = {
     authorId: string;
     query: ListActivitiesQueryProps;
+    params: ListActivityParams;
 };
 
 type ListActivitiesQueryProps = {
@@ -20,14 +21,23 @@ type ListActivitiesQueryProps = {
     take?: number;
 };
 
+type ListActivityParams = {
+    id: string;
+};
+
+export type ListActivitiesQueryValues = ListActivitiesQueryProps[keyof ListActivitiesQueryProps];
+
 export class ListActivitiesService {
-    async execute({authorId, query}: ListActivitiesServiceProps) {
+    async execute({authorId, query, params}: ListActivitiesServiceProps) {
         
         if ( !ObjectId.isValid(authorId) ) throw new Error('Missing request data.');
         
+        const accountId = ObjectId.isValid(params.id) && params.id;
+
         const cashFlowActivitiesList = prismaClient.cashFlowActivity.findMany({ 
             where: { 
                 authorID: authorId,
+                ...(accountId ? { id: accountId } : {}),
                 type: {
                     equals: query.type as CashFlowActivityType
                 },
