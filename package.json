@@ -29,7 +29,7 @@
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^6.1.1",
     "@types/node": "^22.10.2",
-    "prisma": "^6.0.1"
+    "prisma": "^6.1.0"
   },
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/server.ts",
