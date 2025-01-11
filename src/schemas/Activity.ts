@@ -15,9 +15,20 @@ const ListActivitiesSchema = {
             skip: { type: 'integer' },
             take: { type: 'integer' },
         },
-        additionalProperties: true
+        additionalProperties: false,
     }
 }
+
+const ListActivitySchema = {
+    params: {
+        type: 'object',
+        required: ['id'],
+        properties: {
+            id: { type: 'string' }
+        },
+        additionalProperties: false,
+    }
+};
 
 const CreateActivitySchema = {
     body: {
@@ -73,4 +84,4 @@ const DeleteActivitySchema = {
     }
 }
 
-export { ListActivitiesSchema, CreateActivitySchema, UpdateActivitySchema, DeleteActivitySchema };
+export { ListActivitiesSchema, ListActivitySchema, CreateActivitySchema, UpdateActivitySchema, DeleteActivitySchema };

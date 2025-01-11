@@ -1,8 +1,8 @@
-import validateActivityType from "@utils/validateActivityType";
+import validateActivityType from "src/utils/validateActivityType";
 import prismaClient from "@prismaClient";
 import { ObjectId } from "mongodb";
 import { isDate } from "util/types";
-import validateNames from "@utils/validateNames";
+import validateNames from "src/utils/validateNames";
 
 type UpdateActivityServiceProps = {
     authorId: string;

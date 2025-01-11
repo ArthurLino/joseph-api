@@ -9,6 +9,17 @@ const ListCategoriesSchema = {
     }
 }
 
+const ListCategorySchema = {
+    params: {
+        type: 'object',
+        required: ['id'],
+        properties: {
+            id: { type: 'string' }
+        },
+        additionalProperties: false,
+    }
+};
+
 const CreateCategorySchema = {
     body: {
         type: 'object',
@@ -49,4 +60,4 @@ const DeleteCategorySchema = {
     }
 };
 
-export { CreateCategorySchema, ListCategoriesSchema, UpdateCategorySchema, DeleteCategorySchema };
+export { CreateCategorySchema, ListCategoriesSchema, ListCategorySchema, UpdateCategorySchema, DeleteCategorySchema };

@@ -5,7 +5,7 @@ import { JwtPayload } from "jsonwebtoken";
 export type AuthenticatedUserRequest = FastifyRequest & JwtPayload;
 
 export const AuthValidation = (request: AuthenticatedUserRequest, reply: FastifyReply) => {
-    // const token = request.headers.authorization?.replace(/^Bearer /, "");
+    
     const token = request.cookies.auth;
 
     if (!token) return reply.status(401).send({ error: 'Access Denied' });
