@@ -1,33 +1,65 @@
-import useAuthValidation from "@hooks/useAuthValidation";
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, FastifyReply } from "fastify";
 import { AuthenticatedUserRequest } from "@auth/AuthValidation";
+import { AuthController } from "@auth/AuthController";
+import { authValidationHandler } from "@handlers/AuthValidationHandler";
+import { queryFilteringHandler } from "@handlers/QueryFilteringHandler";
 import { CreateActivityController, ListActivitiesController, DeleteActivityController, UpdateActivityController } from "@activityControllers";
 import { CreateCategoryController, ListCategoriesController, DeleteCategoryController, UpdateCategoryController } from "@categoryControllers";
 import { CreateCreditCardController, DeleteCreditCardController, ListCreditCardsController, UpdateCreditCardController } from "@creditCardControllers";
 import { CreateBankAccountController, DeleteBankAccountController, ListBankAccountsController, UpdateBankAccountController } from "@bankAccountControllers";
-import { CreateActivitySchema, DeleteActivitySchema, ListActivitiesSchema, UpdateActivitySchema } from "src/schemas/Activity";
-import { ListBankAccountsSchema, CreateBankAccountSchema, UpdateBankAccountSchema, DeleteBankAccountSchema } from "src/schemas/BankAccount";
-import { CreateCategorySchema, DeleteCategorySchema, ListCategoriesSchema, UpdateCategorySchema } from "src/schemas/Category";
-import { CreateCreditCardSchema, DeleteCreditCardSchema, UpdateCreditCardSchema, ListCreditCardsSchema } from "src/schemas/CreditCard";
+import { CreateActivitySchema, DeleteActivitySchema, ListActivitiesSchema, ListActivitySchema, UpdateActivitySchema } from "@schemas/Activity";
+import { CreateCategorySchema, DeleteCategorySchema, ListCategoriesSchema, ListCategorySchema, UpdateCategorySchema } from "@schemas/Category";
+import { CreateCreditCardSchema, DeleteCreditCardSchema, UpdateCreditCardSchema, ListCreditCardsSchema, ListCreditCardSchema } from "@schemas/CreditCard";
+import { ListBankAccountsSchema, CreateBankAccountSchema, UpdateBankAccountSchema, DeleteBankAccountSchema, ListBankAccountSchema } from "@schemas/BankAccount";
 
 export async function userRoutes(fastify: FastifyInstance) {
-    fastify.addHook('preValidation', useAuthValidation)
+    fastify.addHook('preValidation', authValidationHandler)
+
+    fastify.get('/me', async (request: AuthenticatedUserRequest, reply) => {
+        return reply.send({
+            user: {
+                id: request.user.id,
+                name: request.user.name,
+                email: request.user.email
+            }
+        });
+    });
+    
+    fastify.post('/signout', async (request: AuthenticatedUserRequest, reply: FastifyReply) => {
+        return new AuthController().handleLogout(request, reply);
+    });
 
     // GET
 
-    fastify.get('/finances', { schema: ListActivitiesSchema }, async (request: AuthenticatedUserRequest, reply) => {
+    fastify.get('/finances', { schema: ListActivitiesSchema, preHandler: queryFilteringHandler }, async (request: AuthenticatedUserRequest, reply) => {
         return new ListActivitiesController().handle(request, reply)
     });
 
-    fastify.get('/finances/categories', { schema: ListCategoriesSchema }, async (request: AuthenticatedUserRequest, reply) => {
+    fastify.get('/finances/:id', { schema: ListActivitySchema }, async (request: AuthenticatedUserRequest, reply) => {
+        return new ListActivitiesController().handle(request, reply)
+    });
+
+    fastify.get('/finances/categories', { schema: ListCategoriesSchema, preHandler: queryFilteringHandler }, async (request: AuthenticatedUserRequest, reply) => {
         return new ListCategoriesController().handle(request, reply);
     });
 
-    fastify.get('/finances/accounts', { schema: ListBankAccountsSchema }, async (request: AuthenticatedUserRequest, reply) => {
+    fastify.get('/finances/categories/:id', { schema: ListCategorySchema }, async (request: AuthenticatedUserRequest, reply) => {
+        return new ListCategoriesController().handle(request, reply);
+    });
+
+    fastify.get('/finances/accounts', { schema: ListBankAccountsSchema, preHandler: queryFilteringHandler }, async (request: AuthenticatedUserRequest, reply) => {
         return new ListBankAccountsController().handle(request, reply);
     });
 
-    fastify.get('/finances/cards', { schema: ListCreditCardsSchema }, async (request: AuthenticatedUserRequest, reply) => {
+    fastify.get('/finances/accounts/:id', { schema: ListBankAccountSchema }, async (request: AuthenticatedUserRequest, reply) => {
+        return new ListBankAccountsController().handle(request, reply);
+    });
+
+    fastify.get('/finances/cards', { schema: ListCreditCardsSchema, preHandler: queryFilteringHandler }, async (request: AuthenticatedUserRequest, reply) => {
+        return new ListCreditCardsController().handle(request, reply);
+    });
+
+    fastify.get('/finances/cards/:id', { schema: ListCreditCardSchema }, async (request: AuthenticatedUserRequest, reply) => {
         return new ListCreditCardsController().handle(request, reply);
     });
     

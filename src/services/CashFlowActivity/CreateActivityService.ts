@@ -1,6 +1,6 @@
 import prismaClient from "@prismaClient";
-import validateActivityType from "@utils/validateActivityType";
-import validatePaymentMethod from "@utils/validatePaymentMethod";
+import validateActivityType from "src/utils/validateActivityType";
+import validatePaymentMethod from "src/utils/validatePaymentMethod";
 import { CashFlowActivityType, PaymentMethod } from "@prisma/client"
 import { ObjectId } from "mongodb";
 

@@ -1,13 +1,14 @@
 import prismaClient from "@prismaClient";
-import isDateValid from "@utils/isDateValid";
-import validateActivityType from "@utils/validateActivityType";
+import isDateValid from "src/utils/isDateValid";
+import validateActivityType from "src/utils/validateActivityType";
 import { CashFlowActivityType } from "@prisma/client";
 import { ObjectId } from "mongodb";
-import validateNames from "@utils/validateNames";
+import validateNames from "src/utils/validateNames";
 
 type ListActivitiesServiceProps = {
     authorId: string;
     query: ListActivitiesQueryProps;
+    params: ListActivityParams;
 };
 
 type ListActivitiesQueryProps = {
@@ -15,59 +16,37 @@ type ListActivitiesQueryProps = {
     date?: Date;
     from?: Date;
     to?: Date;
-    categories?: string[] | string;
+    categories?: string[];
     skip?: number;
     take?: number;
+};
+
+type ListActivityParams = {
+    id: string;
 };
 
 export type ListActivitiesQueryValues = ListActivitiesQueryProps[keyof ListActivitiesQueryProps];
 
 export class ListActivitiesService {
-    async execute({authorId, query}: ListActivitiesServiceProps) {
+    async execute({authorId, query, params}: ListActivitiesServiceProps) {
         
         if ( !ObjectId.isValid(authorId) ) throw new Error('Missing request data.');
-
-        const filters: { [key: string]: any } = {};
-
-        const filter: { [key: string]: (value: any) => any } = {
-            "type": (type: string) => validateActivityType(type) && validateActivityType(type) as string,
-            "date": (date: Date) => isDateValid(date) && new Date(date),
-            "from": (from: Date) => isDateValid(from) && new Date(from),
-            "to": (to: Date) => isDateValid(to) && new Date(to),
-            "categories": (categories: Array<string> | string) => {
-                if ( typeof categories === 'string' ) {
-                    if ( validateNames(categories) ) return [ categories ];
-                } 
-                else {
-                    if ( categories.every((category: string) => validateNames(category)) ) return categories;
-                }
-            },
-            "skip": (skip: number) => Number.isInteger(skip) && skip,
-            "take": (take: number) => Number.isInteger(take) && take,
-        };
-
-        Object.entries(query).forEach(([key, value]: [string, ListActivitiesQueryValues]) => {
-
-            if ( value === undefined ) return; // query parameters not provided
-
-            if ( !filter[key](value) ) throw new Error(`Invalid query ${key} parameter provided`); // query parameter where provided but did not pass validation
-
-            filters[key] = filter[key](value); // query parameter provided and passed validation
-
-        });
         
+        const accountId = ObjectId.isValid(params.id) && params.id;
+
         const cashFlowActivitiesList = prismaClient.cashFlowActivity.findMany({ 
             where: { 
                 authorID: authorId,
+                ...(accountId ? { id: accountId } : {}),
                 type: {
-                    equals: filters.type as CashFlowActivityType
+                    equals: query.type as CashFlowActivityType
                 },
                 date: {
-                    equals: filters.date,
-                    gte: filters.from,
-                    lte: filters.to,
+                    equals: query.date,
+                    gte: query.from,
+                    lte: query.to,
                 },
-                AND: filters.categories && filters.categories.map((category: string) => ({
+                AND: query.categories && query.categories.map((category: string) => ({
                     categories: {
                         some: {
                             name: category
@@ -76,12 +55,12 @@ export class ListActivitiesService {
                 })),
                 categories: {
                     some: {
-                        name: filters.category
+                        name: query.categories ? query.categories[0] : undefined
                     }
                 }
             },
-            skip: filters.skip,
-            take: filters.take,
+            skip: query.skip,
+            take: query.take,
         });
             
         return cashFlowActivitiesList;

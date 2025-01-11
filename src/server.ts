@@ -1,11 +1,13 @@
-import Fastify from 'fastify';
+import Fastify, { FastifyRequest } from 'fastify';
 import cors from '@fastify/cors';
+import fastifyCookie from '@fastify/cookie';
 import rateLimit from '@fastify/rate-limit';
 import Ajv from 'ajv';
 import fastUri from 'fast-uri';
 import { publicRoutes } from './routes/public';
 import { userRoutes } from './routes/user'
 import { configDotenv } from 'dotenv';
+import { request } from 'http';
 
 configDotenv();
 
@@ -20,14 +22,30 @@ const ajv = new Ajv({
 
 const server = Fastify({ 
     logger: true,
-
 });
 
 
 const start = async () => {
 
     server.setValidatorCompiler(({ schema }) => ajv.compile(schema));
-    await server.register(cors);
+    await server.register(fastifyCookie);
+    await server.register(cors, {
+        delegator: (request: FastifyRequest, callback) => {
+
+            const corsOptions = {
+                origin: true,
+                credentials: true,
+                methods: ['GET', 'POST', 'PUT', 'DELETE'],
+                allowedHeaders: ['Content-Type']
+            }
+
+            if ( !request.headers.origin ) corsOptions.origin = false;
+
+            corsOptions.origin = true;
+
+            callback(null, corsOptions);
+        }
+    });
     await server.register(rateLimit, {
         max: 100,
         timeWindow: '1 minute'

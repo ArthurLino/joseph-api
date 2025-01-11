@@ -1,5 +1,5 @@
 import prismaClient from "@prismaClient";
-import validateNames from "@utils/validateNames";
+import validateNames from "src/utils/validateNames";
 import { ObjectId } from "mongodb";
 
 type UpdateCategoryServiceProps = {

@@ -48,6 +48,17 @@ const ListCreditCardsSchema = {
     }
 }
 
+const ListCreditCardSchema = {
+    params: {
+        type: 'object',
+        required: ['id'],
+        properties: {
+            id: { type: 'string' }
+        },
+        additionalProperties: false,
+    }
+};
+
 const DeleteCreditCardSchema = {
     params: {
         type: 'object',
@@ -59,4 +70,4 @@ const DeleteCreditCardSchema = {
     }
 }
 
-export { CreateCreditCardSchema, UpdateCreditCardSchema, ListCreditCardsSchema, DeleteCreditCardSchema };
+export { CreateCreditCardSchema, UpdateCreditCardSchema, ListCreditCardsSchema, ListCreditCardSchema, DeleteCreditCardSchema };
