@@ -3,7 +3,7 @@
     "@fastify/cookie": "^11.0.2",
     "@fastify/cors": "^10.0.1",
     "@fastify/rate-limit": "^10.2.1",
-    "@prisma/client": "^6.0.1",
+    "@prisma/client": "^6.2.1",
     "@types/bcrypt": "^5.0.2",
     "@types/mongodb": "^4.0.6",
     "bcrypt": "^5.1.1",
