@@ -5,7 +5,7 @@
     "@fastify/rate-limit": "^10.2.2",
     "@prisma/client": "^6.2.1",
     "@types/bcrypt": "^5.0.2",
-    "@types/mongodb": "^4.0.6",
+    "@types/mongodb": "^4.0.7",
     "bcrypt": "^5.1.1",
     "bcrypt-ts": "^5.0.3",
     "body-parser": "^1.20.3",
